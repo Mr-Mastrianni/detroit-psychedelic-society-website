@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detroit Psychedelic Society - Immersive Brand Identity</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <style>
+        :root {
+            --cosmic-blue: #1A237E;
+            --deep-purple: #4A148C;
+            --earth-green: #1B5E20;
+            --golden-yellow: #FFD54F;
+            --teal-accent: #00796B;
+            --light-purple: #B39DDB;
+            --off-white: #F5F5F5;
+            --dark-bg: #0A0A1A;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--off-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        .section {
+            padding: 3rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4A148C, #1A237E, #1B5E20);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+
+        .three-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        .color-swatch {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 10px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .color-swatch:hover {
+            transform: scale(1.1);
+        }
+
+        .animated-border {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+
+        .animated-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--deep-purple), var(--cosmic-blue), var(--earth-green), var(--golden-yellow), var(--deep-purple));
+            z-index: -1;
+            animation: gradient-animation 3s ease-in-out infinite;
+            background-size: 300% 300%;
+            border-radius: 10px;
+        }
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .card {
+            background-color: rgba(15, 15, 35, 0.8);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .mission-statement {
+            font-size: 1.5rem;
+            font-weight: 300;
+            font-style: italic;
+            margin: 2rem 0;
+            line-height: 1.8;
+            text-align: center;
+        }
+
+        .value-pill {
+            background: rgba(74, 20, 140, 0.3);
+            border: 1px solid var(--light-purple);
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            margin: 0.5rem;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .value-pill:hover {
+            background: rgba(74, 20, 140, 0.6);
+            transform: translateY(-3px);
+        }
+
+        .logo-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .detroit-map {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+
+        .typeface-showcase {
+            margin: 2rem 0;
+        }
+
+        .typeface-showcase h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .typeface-showcase p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.8;
+        }
+
+        .brand-voice-example {
+            background-color: rgba(0, 121, 107, 0.1);
+            border-left: 4px solid var(--teal-accent);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+
+        .audience-segment {
+            border-left: 4px solid var(--golden-yellow);
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .application-example {
+            margin: 2rem 0;
+            position: relative;
+        }
+
+        .application-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, rgba(26, 35, 126, 0.8), rgba(74, 20, 140, 0.6));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .application-example:hover .application-overlay {
+            opacity: 1;
+        }
+
+        /* Psychedelic Animation */
+        @keyframes psychedelic-pulse {
+            0% {
+                box-shadow: 0 0 10px 5px rgba(74, 20, 140, 0.7);
+            }
+            25% {
+                box-shadow: 0 0 15px 8px rgba(26, 35, 126, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 10px 5px rgba(27, 94, 32, 0.7);
+            }
+            75% {
+                box-shadow: 0 0 15px 8px rgba(255, 213, 79, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 10px 5px rgba(74, 20, 140, 0.7);
+            }
+        }
+
+        .pulse-animation {
+            animation: psychedelic-pulse 8s infinite;
+        }
+
+        .mushroom-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .mushroom-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+        }
+
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--deep-purple), var(--cosmic-blue), var(--earth-green));
+            width: 0%;
+            z-index: 1000;
+            transition: width 0.2s;
+        }
+
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--light-purple), transparent);
+            margin: 4rem 0;
+            width: 100%;
+        }
+
+        .button {
+            display: inline-block;
+            background: linear-gradient(45deg, var(--deep-purple), var(--cosmic-blue));
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            margin: 1rem 0;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 15px rgba(0,0,0,0.3);
+            background: linear-gradient(45deg, #5d1eb5, #2a35a3);
+        }
+    </style>
+</head>
+<body>
+    <div id="progress-bar"></div>
+    <div id="three-container" class="three-canvas"></div>
+
+    <!-- Hero Section -->
+    <section class="section min-h-screen flex items-center">
+        <div class="container">
+            <div class="text-center">
+                <div class="logo-container pulse-animation mb-8">
+                    <!-- Logo will be inserted by ThreeJS -->
+                </div>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6">
+                    <span class="gradient-text">Detroit Psychedelic Society</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-80">Brand Identity Guidelines</p>
+                <div class="mx-auto w-24 h-1 bg-purple-600 mb-12"></div>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                    A comprehensive guide to our visual identity, voice, and mission as we foster 
+                    consciousness exploration, community connection, and educational enlightenment 
+                    through the lens of Detroit's unique cultural renaissance.
+                </p>
+                <div class="scroll-down-indicator">
+                    <i class="fas fa-chevron-down text-2xl text-purple-400"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brand Overview -->
+    <section class="section" id="brand-overview">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-6 gradient-text">Brand Overview</h2>
+            <div class="animated-border">
+                <div class="card">
+                    <p class="text-lg mb-4">
+                        Since being established in 2014, The Detroit Psychedelic Society has been known 
+                        to push the envelope in moving forward all positive energy as it relates to 
+                        psychedelics. Our identity merges the industrial heritage of Detroit with the 
+                        organic, flowing nature of psychedelic exploration.
+                    </p>
+                    <p class="text-lg">
+                        This brand identity document serves as a guide for all communications, ensuring 
+                        a consistent representation of our values, mission, and aesthetic across all 
+                        touchpoints. We blend sacred geometry with Detroit's urban landscape to create 
+                        a unique visual language that honors both our roots and our vision.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mission-statement animated-border mt-12">
+                <div class="card">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Our Mission</h3>
+                    <p>
+                        "To foster community healing, personal growth, and educational enlightenment 
+                        through the responsible exploration of psychedelic experiences, while honoring 
+                        Detroit's unique cultural renaissance."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Identity -->
+    <section class="section" id="visual-identity">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-10 gradient-text">Visual Identity</h2>
+            
+            <!-- Logo -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6">Logo</h3>
+                <div class="animated-border">
+                    <div class="card flex flex-col md:flex-row items-center">
+                        <div class="w-full md:w-1/3 mb-6 md:mb-0">
+                            <img src="https://cdn1.genspark.ai/user-upload-image/v1/webpage_capture_screen_tool_call/037ac14a-6bbb-480a-b656-2fd91d0c08c4" alt="Detroit Psychedelic Society Logo" class="w-full rounded-lg">
+                        </div>
+                        <div class="w-full md:w-2/3 md:pl-8">
+                            <h4 class="text-xl font-bold mb-3">Logo Symbolism</h4>
+                            <p class="mb-4">
+                                Our logo features a circular design with a stylized profile of Michigan that incorporates 
+                                neural pathway patterns. The deep blue background represents the depth of consciousness,
+                                while the white elements symbolize enlightenment and clarity.
+                            </p>
+                            <p>
+                                This design bridges Detroit's urban identity with the transcendent nature 
+                                of psychedelic experiences, creating a visual anchor that is both grounded 
+                                in our city and expansive in its implications.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Color Palette -->
+            <div class="mb-16" id="color-palette">
+                <h3 class="text-2xl font-bold mb-6">Color Palette</h3>
+                <div class="animated-border">
+                    <div class="card">
+                        <div class="flex flex-wrap justify-center">
+                            <div class="text-center">
+                                <div class="color-swatch" style="background-color: #1A237E;"></div>
+                                <p>Cosmic Blue</p>
+                                <p class="text-sm opacity-70">#1A237E</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="color-swatch" style="background-color: #4A148C;"></div>
+                                <p>Deep Purple</p>
+                                <p class="text-sm opacity-70">#4A148C</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="color-swatch" style="background-color: #1B5E20;"></div>
+                                <p>Earth Green</p>
+                                <p class="text-sm opacity-70">#1B5E20</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="color-swatch" style="background-color: #FFD54F;"></div>
+                                <p>Golden Yellow</p>
+                                <p class="text-sm opacity-70">#FFD54F</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="color-swatch" style="background-color: #00796B;"></div>
+                                <p>Teal Accent</p>
+                                <p class="text-sm opacity-70">#00796B</p>
+                            </div>
+                        </div>
+                        <div class="mt-8">
+                            <h4 class="text-xl font-bold mb-3">Color Psychology</h4>
+                            <p class="mb-4">
+                                Our palette combines cosmic blues and deep purples that evoke expanded consciousness 
+                                with earthy greens that ground our work in nature and healing. Golden yellows add 
+                                vibrance and enlightenment, while teal accents provide balance and tranquility.
+                            </p>
+                            <p>
+                                These colors work together to create a visual experience that balances the ethereal 
+                                nature of psychedelic exploration with the grounded, urban identity of Detroit.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Typography -->
+            <div class="mb-16" id="typography">
+                <h3 class="text-2xl font-bold mb-6">Typography</h3>
+                <div class="animated-border">
+                    <div class="card">
+                        <div class="typeface-showcase">
+                            <h2 style="font-family: 'Montserrat', sans-serif;">Montserrat</h2>
+                            <p style="font-family: 'Montserrat', sans-serif;">
+                                Primary Heading Font: Modern, bold, and clear with geometric qualities 
+                                that evoke precision while maintaining organic flow.
+                            </p>
+                            <div class="flex flex-wrap">
+                                <div class="w-full md:w-1/3 mb-4">
+                                    <p style="font-family: 'Montserrat', sans-serif; font-weight: 300;">Light (300)</p>
+                                </div>
+                                <div class="w-full md:w-1/3 mb-4">
+                                    <p style="font-family: 'Montserrat', sans-serif; font-weight: 400;">Regular (400)</p>
+                                </div>
+                                <div class="w-full md:w-1/3 mb-4">
+                                    <p style="font-family: 'Montserrat', sans-serif; font-weight: 700;">Bold (700)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="typeface-showcase">
+                            <h2 style="font-family: 'Poppins', sans-serif;">Poppins</h2>
+                            <p style="font-family: 'Poppins', sans-serif;">
+                                Body Text Font: Highly readable with a friendly, approachable feel 
+                                that balances professionalism with warmth.
+                            </p>
+                            <div class="flex flex-wrap">
+                                <div class="w-full md:w-1/3 mb-4">
+                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 300;">Light (300)</p>
+                                </div>
+                                <div class="w-full md:w-1/3 mb-4">
+                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 400;">Regular (400)</p>
+                                </div>
+                                <div class="w-full md:w-1/3 mb-4">
+                                    <p style="font-family: 'Poppins', sans-serif; font-weight: 500;">Medium (500)</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h4 class="text-xl font-bold mb-3">Typography Guidelines</h4>
+                            <p>
+                                Maintain clear hierarchy with consistent font sizing. Use Montserrat for 
+                                headings, titles, and important callouts. Poppins works for body text, 
+                                descriptions, and interface elements. This combination creates a balance 
+                                between the bold, visionary aspects of our mission and the accessible, 
+                                educational focus of our work.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Core Values -->
+    <section class="section" id="core-values">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-10 gradient-text">Core Values</h2>
+            <div class="animated-border">
+                <div class="card">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(74, 20, 140, 0.2);">
+                                    <i class="fas fa-book text-purple-300 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold ml-4">Educational Excellence</h3>
+                            </div>
+                            <p>
+                                Information and education always come first. We commit to providing 
+                                accurate, evidence-based knowledge that empowers individuals to make 
+                                informed decisions about psychedelic exploration.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(27, 94, 32, 0.2);">
+                                    <i class="fas fa-hands-helping text-green-300 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold ml-4">Community Connection</h3>
+                            </div>
+                            <p>
+                                We foster meaningful relationships and collective growth through 
+                                shared experiences, collaborative learning, and mutual support, 
+                                reflecting Detroit's strong community traditions.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(26, 35, 126, 0.2);">
+                                    <i class="fas fa-shield-alt text-blue-300 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold ml-4">Responsible Exploration</h3>
+                            </div>
+                            <p>
+                                Safety, consent, and ethical consideration guide all our practices. 
+                                We emphasize harm reduction, respect for sacred traditions, and 
+                                thoughtful integration of experiences.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(255, 213, 79, 0.2);">
+                                    <i class="fas fa-door-open text-yellow-300 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold ml-4">Inclusive Accessibility</h3>
+                            </div>
+                            <p>
+                                We welcome diverse backgrounds, perspectives, and experiences, 
+                                creating spaces where everyone feels valued regardless of race, 
+                                gender, age, or prior experience with psychedelics.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(0, 121, 107, 0.2);">
+                                    <i class="fas fa-city text-teal-300 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold ml-4">Cultural Integration</h3>
+                            </div>
+                            <p>
+                                We honor Detroit's rich history and present renaissance, integrating 
+                                local arts, music, and cultural expressions into our approach to 
+                                psychedelic exploration and community building.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <div class="flex items-center mb-4">
+                                <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background-color: rgba(74, 20, 140, 0.2);">
+                                    <i class="fas fa-microscope text-purple-300 text-xl"></i>
+                                </div>
+                                <h3 class="text-xl font-bold ml-4">Scientific Grounding</h3>
+                            </div>
+                            <p>
+                                We embrace evidence-based approaches and contribute to the growing 
+                                body of research on psychedelics, balancing ancestral wisdom with 
+                                contemporary science.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Target Audience -->
+    <section class="section" id="target-audience">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-10 gradient-text">Target Audience</h2>
+            <div class="animated-border">
+                <div class="card">
+                    <p class="mb-8 text-lg">
+                        The Detroit Psychedelic Society serves a diverse community united by curiosity, 
+                        openness to growth, and connection to Detroit's unique cultural landscape.
+                    </p>
+                    
+                    <div class="audience-segment">
+                        <h3 class="text-xl font-bold mb-3">Conscious Explorers</h3>
+                        <p>
+                            Individuals seeking personal growth, healing, and expanded consciousness 
+                            through intentional psychedelic experiences. They value education, 
+                            preparation, and integration practices.
+                        </p>
+                    </div>
+                    
+                    <div class="audience-segment">
+                        <h3 class="text-xl font-bold mb-3">Community Builders</h3>
+                        <p>
+                            People who see the potential for psychedelic experiences to strengthen 
+                            community bonds and foster collective healing, particularly in the 
+                            context of Detroit's revitalization.
+                        </p>
+                    </div>
+                    
+                    <div class="audience-segment">
+                        <h3 class="text-xl font-bold mb-3">Knowledge Seekers</h3>
+                        <p>
+                            Researchers, students, healthcare professionals, and the intellectually 
+                            curious who want evidence-based information about psychedelics, 
+                            regardless of their interest in personal use.
+                        </p>
+                    </div>
+                    
+                    <div class="audience-segment">
+                        <h3 class="text-xl font-bold mb-3">Detroit Cultural Catalysts</h3>
+                        <p>
+                            Artists, musicians, creators, and visionaries who see the connection 
+                            between psychedelic exploration and Detroit's artistic renaissance, 
+                            seeking to integrate these experiences into their creative practice.
+                        </p>
+                    </div>
+                    
+                    <div class="audience-segment">
+                        <h3 class="text-xl font-bold mb-3">Healing-Focused Individuals</h3>
+                        <p>
+                            People exploring alternative approaches to mental health, trauma recovery, 
+                            addiction, and personal transformation, often after conventional approaches 
+                            have proven insufficient.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="text-xl font-bold mb-3">Psychographic Characteristics</h4>
+                        <div class="flex flex-wrap">
+                            <div class="value-pill">Open-minded</div>
+                            <div class="value-pill">Growth-oriented</div>
+                            <div class="value-pill">Community-connected</div>
+                            <div class="value-pill">Intellectually curious</div>
+                            <div class="value-pill">Detroit-proud</div>
+                            <div class="value-pill">Healing-focused</div>
+                            <div class="value-pill">Spiritually exploratory</div>
+                            <div class="value-pill">Culturally aware</div>
+                            <div class="value-pill">Environmentally conscious</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Brand Voice -->
+    <section class="section" id="brand-voice">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-10 gradient-text">Brand Voice & Messaging</h2>
+            <div class="animated-border">
+                <div class="card">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Grounded yet Visionary</h3>
+                            <p>
+                                We balance scientific approach with spiritual exploration, 
+                                maintaining credibility while embracing the transcendent 
+                                aspects of psychedelic experiences.
+                            </p>
+                            <div class="brand-voice-example mt-4">
+                                <p><em>"Our workshop combines evidence-based protocols with space for personal revelation, honoring both the science and the mystery of psilocybin."</em></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Inclusive & Welcoming</h3>
+                            <p>
+                                Our language invites participation from all backgrounds and experience levels, 
+                                avoiding jargon while still honoring the depth of psychedelic traditions.
+                            </p>
+                            <div class="brand-voice-example mt-4">
+                                <p><em>"Whether this is your first exploration or you're continuing a lifelong journey, you'll find community and wisdom in our integration circle."</em></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Safety-First Messaging</h3>
+                            <p>
+                                We emphasize responsible exploration, preparation, and integration 
+                                in all communications, never glamorizing use without context.
+                            </p>
+                            <div class="brand-voice-example mt-4">
+                                <p><em>"Preparation is essential for meaningful experiences. Our harm reduction workshop provides the foundation needed for safe exploration."</em></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Community-Centered</h3>
+                            <p>
+                                Our voice highlights collective experience and Detroit's unique 
+                                psychedelic culture, emphasizing connection over individualism.
+                            </p>
+                            <div class="brand-voice-example mt-4">
+                                <p><em>"Detroit's renaissance mirrors our collective inner journeys—rebuilding, reconnecting, and reimagining what's possible when we come together."</em></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="text-xl font-bold mb-3">Communication Principles</h4>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Always provide context for psychedelic discussions</li>
+                            <li>Balance accessibility with depth of information</li>
+                            <li>Honor indigenous and traditional knowledge while avoiding appropriation</li>
+                            <li>Acknowledge legal realities while advocating for evidence-based policy</li>
+                            <li>Use inclusive language that welcomes diverse perspectives</li>
+                            <li>Connect Detroit's cultural identity to broader psychedelic movements</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Detroit-Specific Elements -->
+    <section class="section" id="detroit-elements">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-10 gradient-text">Distinctive Detroit Elements</h2>
+            <div class="animated-border">
+                <div class="card">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Urban Renewal Metaphors</h3>
+                            <p>
+                                We draw parallels between Detroit's rebirth and personal transformation, 
+                                using the city's resilience as inspiration for inner growth and healing.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Industrial-Organic Fusion</h3>
+                            <p>
+                                Our visual language merges Detroit's industrial heritage with organic, 
+                                flowing psychedelic motifs—steel and concrete intertwined with mycelia and vines.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Detroit Color Influences</h3>
+                            <p>
+                                Our palette incorporates both urban landscapes (deep blues of night skylines) 
+                                and Michigan's natural environments (greens of forests, blues of Great Lakes).
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold mb-4">Community Spotlights</h3>
+                            <p>
+                                We showcase Detroit's diverse psychedelic pioneers and community leaders, 
+                                centering local voices and experiences in our educational materials.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h4 class="text-xl font-bold mb-4">Michigan-Specific Context</h4>
+                        <p class="mb-4">
+                            Our communications acknowledge and educate about Michigan's psychedelic legal landscape, 
+                            including decriminalization efforts in Detroit, Ann Arbor, Hazel Park, Ferndale, and Ypsilanti.
+                        </p>
+                        <div class="detroit-map mt-6" id="detroit-map">
+                            <!-- Map will be inserted by ThreeJS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Visual Applications -->
+    <section class="section" id="applications">
+        <div class="container">
+            <h2 class="text-4xl font-bold mb-10 gradient-text">Brand Applications</h2>
+            <div class="animated-border">
+                <div class="card">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="application-example">
+                            <h3 class="text-xl font-bold mb-4">Digital Experience</h3>
+                            <div class="rounded-lg overflow-hidden">
+                                <img src="https://fraktality.com/wp-content/uploads/2013/08/4444444.gif" alt="Interactive Experience" class="w-full">
+                            </div>
+                            <p class="mt-4">
+                                Interactive elements for website and digital communications featuring 
+                                sacred geometry animations that respond to user interaction.
+                            </p>
+                        </div>
+                        
+                        <div class="application-example">
+                            <h3 class="text-xl font-bold mb-4">Event Materials</h3>
+                            <div class="rounded-lg overflow-hidden">
+                                <img src="https://cdn1.genspark.ai/user-upload-image/v1/webpage_capture_screen_tool_call/bc1fc075-62f6-46cc-b2cf-eb70c238ec5d" alt="Event Materials" class="w-full">
+                            </div>
+                            <p class="mt-4">
+                                Event posters, programs, and tickets featuring cosmic imagery, 
+                                Detroit skylines, and our distinctive color palette.
+                            </p>
+                        </div>
+                        
+                        <div class="application-example">
+                            <h3 class="text-xl font-bold mb-4">Educational Resources</h3>
+                            <div class="rounded-lg overflow-hidden bg-gray-800">
+                                <img src="https://fraktality.com/wp-content/uploads/2019/08/347876766678967.gif" alt="Educational Materials" class="w-full">
+                            </div>
+                            <p class="mt-4">
+                                Guides, handbooks, and digital resources that balance visual 
+                                engagement with clear, accessible information.
+                            </p>
+                        </div>
+                        
+                        <div class="application-example">
+                            <h3 class="text-xl font-bold mb-4">Community Spaces</h3>
+                            <div class="rounded-lg overflow-hidden">
+                                <img src="https://i.etsystatic.com/7254900/r/il/155c9c/3499752717/il_fullxfull.3499752717_hhk5.jpg" alt="Community Spaces" class="w-full">
+                            </div>
+                            <p class="mt-4">
+                                Environmental design for physical gatherings incorporating Detroit 
+                                architectural elements with psychedelic art influences.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <!-- Conclusion -->
+    <section class="section" id="conclusion">
+        <div class="container text-center">
+            <div class="animated-border">
+                <div class="card">
+                    <h2 class="text-3xl font-bold mb-6 gradient-text">Living Brand Identity</h2>
+                    <p class="text-lg mb-8">
+                        This brand identity is not static but evolving—just like consciousness itself. 
+                        As our community grows and Detroit continues its renaissance, our visual and 
+                        verbal expression will adapt while maintaining core elements that define the 
+                        Detroit Psychedelic Society.
+                    </p>
+                    <div class="mushroom-icons flex justify-center mb-8">
+                        <img src="https://i.pinimg.com/originals/79/88/eb/7988eb48a1ca01e8badda58b056a8003.gif" alt="Sacred Geometry" class="mushroom-icon">
+                        <img src="https://fraktality.com/wp-content/uploads/2019/05/ezgif-5-1aafa31a77b5.gif" alt="Sacred Geometry" class="mushroom-icon">
+                        <img src="https://i.pinimg.com/originals/79/88/eb/7988eb48a1ca01e8badda58b056a8003.gif" alt="Sacred Geometry" class="mushroom-icon">
+                    </div>
+                    <p class="text-lg italic">
+                        "To foster community healing, personal growth, and educational enlightenment 
+                        through the responsible exploration of psychedelic experiences, while honoring 
+                        Detroit's unique cultural renaissance."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Progress bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Scroll down indicator
+        document.querySelector('.scroll-down-indicator').addEventListener('click', () => {
+            document.getElementById('brand-overview').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+
+        // Three.js Animation
+        window.addEventListener('DOMContentLoaded', () => {
+            // Initialize ThreeJS
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setClearColor(0x000000, 0);
+            document.getElementById('three-container').appendChild(renderer.domElement);
+
+            // Create sacred geometry animations
+            const geometry = new THREE.IcosahedronGeometry(3, 1);
+            const material = new THREE.MeshBasicMaterial({
+                color: 0x4A148C,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.5
+            });
+            const icosahedron = new THREE.Mesh(geometry, material);
+            scene.add(icosahedron);
+
+            // Add additional geometric shapes
+            const torusGeometry = new THREE.TorusKnotGeometry(2, 0.5, 100, 16);
+            const torusMaterial = new THREE.MeshBasicMaterial({
+                color: 0x1A237E,
+                wireframe: true,
+                transparent: true,
+                opacity: 0.3
+            });
+            const torusKnot = new THREE.Mesh(torusGeometry, torusMaterial);
+            torusKnot.position.x = 5;
+            torusKnot.position.y = -3;
+            scene.add(torusKnot);
+
+            // Add particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for(let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 20;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.05,
+                color: 0xFFD54F,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 8;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                icosahedron.rotation.x += 0.002;
+                icosahedron.rotation.y += 0.003;
+                
+                torusKnot.rotation.x -= 0.003;
+                torusKnot.rotation.y -= 0.002;
+                
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        });
+    </script>
+</body>
+</html>

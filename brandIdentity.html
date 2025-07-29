@@ -1,0 +1,1934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detroit Psychedelic Society - Brand Identity Guidelines</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.5/dist/gsap.min.js"></script>
+    <style>
+        :root {
+            --deep-blue: #080033;
+            --cosmic-purple: #5626c4;
+            --vibrant-purple: #9b4dca;
+            --earthy-green: #2a9d8f;
+            --light-blue: #a0c4ff;
+            --warm-gold: #e9c46a;
+            --detroit-red: #d62828;
+            --dark-gray: #343a40;
+        }
+        
+        html, body {
+            margin: 0;
+            padding: 0;
+            background-color: #f8f9fa;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            color: #343a40;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--cosmic-purple), var(--vibrant-purple), var(--earthy-green));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--deep-blue), var(--cosmic-purple));
+        }
+
+        .sacred-bg {
+            background: linear-gradient(rgba(8, 0, 51, 0.9), rgba(8, 0, 51, 0.95)), 
+                        url('https://i.pinimg.com/originals/2e/c2/df/2ec2df78de4bf2c475adac2ce70dad60.gif');
+            background-size: cover;
+            background-blend-mode: multiply;
+            background-attachment: fixed;
+        }
+
+        .detroit-bg {
+            background: linear-gradient(rgba(8, 0, 51, 0.8), rgba(8, 0, 51, 0.9)), 
+                        url('https://www.michigan.photography/wp-content/uploads/2018/05/Downtown-Detroit-Skyline-at-Night-Aglow-scaled.jpg');
+            background-size: cover;
+            background-position: center;
+            background-blend-mode: multiply;
+            background-attachment: fixed;
+        }
+
+        .canvas-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+        }
+
+        .full-canvas {
+            height: 500px;
+        }
+
+        canvas {
+            display: block;
+        }
+
+        .color-box {
+            height: 100px;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .color-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .color-box::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .color-box:hover::after {
+            opacity: 1;
+        }
+
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .neural-pathway {
+            position: absolute;
+            width: 2px;
+            background: var(--vibrant-purple);
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        .neural-node {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: var(--vibrant-purple);
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+
+        .mushroom {
+            position: relative;
+            width: 60px;
+            height: 80px;
+            margin: 20px auto;
+        }
+
+        .cap {
+            position: absolute;
+            width: 60px;
+            height: 30px;
+            background: var(--vibrant-purple);
+            border-radius: 50% 50% 0 0;
+            top: 0;
+        }
+
+        .stem {
+            position: absolute;
+            width: 20px;
+            height: 50px;
+            background: var(--light-blue);
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 10px;
+        }
+
+        .logo-3d-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+        }
+
+        .typeface-example {
+            transition: transform 0.3s ease;
+        }
+
+        .typeface-example:hover {
+            transform: scale(1.05);
+        }
+
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(150, 77, 202, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(150, 77, 202, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(150, 77, 202, 0);
+            }
+        }
+
+        .float {
+            animation: float 5s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .spin-slow {
+            animation: spin 20s linear infinite;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .breathe {
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .wave {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100px;
+            background: url('https://i.pinimg.com/originals/f8/e6/07/f8e6071518a81e943ce4cc1ef1ff0cdf.gif');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.2;
+        }
+
+        .psychedelic-text {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .psychedelic-text::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--cosmic-purple), var(--vibrant-purple), var(--earthy-green), var(--cosmic-purple));
+            background-size: 200% 100%;
+            animation: gradient-shift 5s linear infinite;
+        }
+        
+        @keyframes gradient-shift {
+            0% {
+                background-position: 0% 50%;
+            }
+            100% {
+                background-position: 200% 50%;
+            }
+        }
+
+        /* Tailored content styles */
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .logo-container {
+            background-color: var(--deep-blue);
+            padding: 20px;
+            border-radius: 16px;
+            display: inline-block;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .canvas-container {
+                height: 200px;
+            }
+            
+            .full-canvas {
+                height: 300px;
+            }
+            
+            .content-container {
+                padding: 0 1rem;
+            }
+            
+            .logo-3d-container {
+                width: 200px;
+                height: 200px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section with 3D Animation -->
+    <section class="sacred-bg min-h-screen flex items-center justify-center relative">
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+            <div id="heroCanvas" class="w-full h-full"></div>
+        </div>
+        
+        <div class="content-container text-center relative z-10">
+            <div class="logo-container breathe mb-8">
+                <img src="https://www.thedetroitpsychedelicsociety.com/_next/static/media/NavBarLogo.d219f8d2.webp" alt="Detroit Psychedelic Society Logo" class="h-24">
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 text-white">Detroit Psychedelic Society</h1>
+            <h2 class="text-3xl mb-12 text-light-blue">Brand Identity Guidelines</h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">A comprehensive guide to our visual identity, mission, and values as we continue to push boundaries in psychedelic education and community building.</p>
+            
+            <div class="mt-16 pulse">
+                <a href="#introduction" class="text-white text-xl">
+                    <span class="block">Explore</span>
+                    <i class="fas fa-chevron-down mt-4"></i>
+                </a>
+            </div>
+        </div>
+        
+        <div class="wave"></div>
+    </section>
+
+    <!-- Introduction Section -->
+    <section id="introduction" class="section bg-white">
+        <div class="neural-pathway"></div>
+        <div class="neural-node" style="top: 50px;"></div>
+        <div class="neural-node" style="top: 200px;"></div>
+        <div class="neural-node" style="top: 350px;"></div>
+        
+        <div class="content-container relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="logo-3d-container">
+                    <div id="logoCanvas" class="w-full h-full"></div>
+                </div>
+                
+                <div>
+                    <h2 class="text-4xl font-bold mb-8"><span class="psychedelic-text">Our Story</span></h2>
+                    <p class="mb-6 text-lg">Since being established in 2014, The Detroit Psychedelic Society has been known to push the envelope so to speak in moving forward all positive energy as it relates to Psychedelics. It's this standard of excellence that has provided the impetus for us to grow into the family and community based business we are today.</p>
+                    
+                    <p class="mb-8 text-lg">We believe that information and education always comes first - and that means being responsible as leaders in this growing field of study by offering exceptional products and exceptional services.</p>
+                    
+                    <div class="flex flex-wrap gap-4 mt-8">
+                        <div class="px-6 py-3 bg-deep-blue text-white rounded-full">
+                            <span>Est. 2014</span>
+                        </div>
+                        <div class="px-6 py-3 bg-vibrant-purple text-white rounded-full">
+                            <span>Detroit-Based</span>
+                        </div>
+                        <div class="px-6 py-3 bg-earthy-green text-white rounded-full">
+                            <span>Community-Focused</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Values Section -->
+    <section class="section detroit-bg text-white">
+        <div class="content-container">
+            <h2 class="text-4xl font-bold mb-12 text-center"><span class="psychedelic-text">Mission & Core Values</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="card bg-deep-blue bg-opacity-80 p-8">
+                    <h3 class="text-2xl font-bold mb-6">Our Mission</h3>
+                    <p class="text-lg mb-6">To advance understanding, education, and responsible exploration of psychedelics while fostering community connection and supporting individual growth and healing.</p>
+                    
+                    <div class="mushroom float">
+                        <div class="cap"></div>
+                        <div class="stem"></div>
+                    </div>
+                    
+                    <p class="text-lg italic">"Transforming consciousness, one mind at a time."</p>
+                </div>
+                
+                <div>
+                    <div class="card bg-cosmic-purple bg-opacity-80 p-8 mb-8">
+                        <h3 class="text-2xl font-bold mb-4">Core Values</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <i class="fas fa-lightbulb text-warm-gold mt-1 mr-3"></i>
+                                <span><strong>Education</strong> - Information and education always comes first</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-shield-alt text-warm-gold mt-1 mr-3"></i>
+                                <span><strong>Safety</strong> - Promoting responsible exploration and harm reduction</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-users text-warm-gold mt-1 mr-3"></i>
+                                <span><strong>Community</strong> - Building connection across Detroit's diverse population</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-brain text-warm-gold mt-1 mr-3"></i>
+                                <span><strong>Research</strong> - Supporting scientific advancement and evidence-based approaches</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-heart text-warm-gold mt-1 mr-3"></i>
+                                <span><strong>Inclusivity</strong> - Creating welcoming spaces for all backgrounds and experiences</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card bg-earthy-green bg-opacity-80 p-8">
+                        <h3 class="text-2xl font-bold mb-4">Vision</h3>
+                        <p class="text-lg">A Detroit community where psychedelic education, responsible use, and integration support are accessible to all who seek healing and growth.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visual Identity Section -->
+    <section class="section bg-white">
+        <div class="content-container">
+            <h2 class="text-4xl font-bold mb-12 text-center"><span class="psychedelic-text">Visual Identity</span></h2>
+            
+            <!-- Logo Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6">Logo</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <div class="bg-deep-blue p-8 rounded-lg mb-4 flex justify-center">
+                            <img src="https://www.thedetroitpsychedelicsociety.com/_next/static/media/NavBarLogo.d219f8d2.webp" alt="Detroit Psychedelic Society Logo" class="max-h-32">
+                        </div>
+                        <div class="bg-white p-8 rounded-lg border border-gray-200">
+                            <img src="https://www.thedetroitpsychedelicsociety.com/_next/static/media/NavBarLogo.d219f8d2.webp" alt="Detroit Psychedelic Society Logo" class="max-h-32">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <p class="mb-6">Our logo combines elements of Detroit's geography with sacred geometry and cosmic elements. The profile silhouette of Michigan with a focus on Detroit creates immediate geographic identity, while the circular design and emanating lines represent expansion of consciousness and community connection.</p>
+                        
+                        <h4 class="font-bold mb-2">Logo Usage Guidelines:</h4>
+                        <ul class="list-disc pl-5 space-y-2">
+                            <li>Maintain clear space around the logo equal to the height of the "D" in Detroit</li>
+                            <li>Never stretch or distort the logo proportions</li>
+                            <li>Primary logo should appear in white on dark backgrounds or deep blue on light backgrounds</li>
+                            <li>Minimum size for digital: 100px width</li>
+                            <li>Minimum size for print: 1 inch width</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Color Palette Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6">Color Palette</h3>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--deep-blue);"></div>
+                        <h4 class="font-bold">Deep Blue</h4>
+                        <p class="text-sm text-gray-600">#080033</p>
+                        <p class="text-sm">Primary background color representing cosmic depth and night sky.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--cosmic-purple);"></div>
+                        <h4 class="font-bold">Cosmic Purple</h4>
+                        <p class="text-sm text-gray-600">#5626c4</p>
+                        <p class="text-sm">Represents spiritual expansion, mystical experiences, and transformation.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--vibrant-purple);"></div>
+                        <h4 class="font-bold">Vibrant Purple</h4>
+                        <p class="text-sm text-gray-600">#9b4dca</p>
+                        <p class="text-sm">Used for highlights, accents, and interactive elements.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--earthy-green);"></div>
+                        <h4 class="font-bold">Earthy Green</h4>
+                        <p class="text-sm text-gray-600">#2a9d8f</p>
+                        <p class="text-sm">Represents connection to nature, plant medicines, and grounding.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--light-blue);"></div>
+                        <h4 class="font-bold">Light Blue</h4>
+                        <p class="text-sm text-gray-600">#a0c4ff</p>
+                        <p class="text-sm">Used for subtle highlights and text accents.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--warm-gold);"></div>
+                        <h4 class="font-bold">Warm Gold</h4>
+                        <p class="text-sm text-gray-600">#e9c46a</p>
+                        <p class="text-sm">Used for highlighting important elements and calls to action.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: var(--detroit-red);"></div>
+                        <h4 class="font-bold">Detroit Red</h4>
+                        <p class="text-sm text-gray-600">#d62828</p>
+                        <p class="text-sm">Used sparingly for important alerts or to honor Detroit's industrial heritage.</p>
+                    </div>
+                    
+                    <div>
+                        <div class="color-box mb-3" style="background-color: white; border: 1px solid #ddd;"></div>
+                        <h4 class="font-bold">White</h4>
+                        <p class="text-sm text-gray-600">#ffffff</p>
+                        <p class="text-sm">Used for text and space to provide contrast and clarity.</p>
+                    </div>
+                </div>
+                
+                <div class="canvas-container mt-12" id="colorCanvas"></div>
+            </div>
+            
+            <!-- Typography Section -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold mb-6">Typography</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div class="typeface-example p-6 border border-gray-200 rounded-lg">
+                        <h4 class="font-bold mb-4">Primary Font: Montserrat</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Heading 1</p>
+                                <p class="text-4xl font-bold" style="font-family: 'Montserrat', sans-serif;">Consciousness Expansion</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Heading 2</p>
+                                <p class="text-3xl font-bold" style="font-family: 'Montserrat', sans-serif;">Sacred Connection</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Heading 3</p>
+                                <p class="text-2xl font-bold" style="font-family: 'Montserrat', sans-serif;">Community Growth</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="typeface-example p-6 border border-gray-200 rounded-lg">
+                        <h4 class="font-bold mb-4">Body Font: Poppins</h4>
+                        <div class="space-y-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Body Regular</p>
+                                <p class="text-base" style="font-family: 'Poppins', sans-serif;">The Detroit Psychedelic Society provides education and community support for responsible exploration of altered states of consciousness.</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Body Bold</p>
+                                <p class="text-base font-bold" style="font-family: 'Poppins', sans-serif;">Integration practices help individuals process and apply insights gained from psychedelic experiences.</p>
+                            </div>
+                            <div>
+                                <p class="text-sm text-gray-600">Caption/Small</p>
+                                <p class="text-sm" style="font-family: 'Poppins', sans-serif;">Educational workshops held monthly in Detroit's cultural centers.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Visual Elements Section -->
+            <div>
+                <h3 class="text-2xl font-bold mb-6">Visual Elements</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="card p-6 border border-gray-200 rounded-lg">
+                        <h4 class="font-bold mb-4">Sacred Geometry</h4>
+                        <div class="canvas-container" id="geometryCanvas"></div>
+                        <p class="mt-4">Sacred geometric patterns are used throughout our visual materials to represent the mathematical principles that govern both natural and spiritual worlds.</p>
+                    </div>
+                    
+                    <div class="card p-6 border border-gray-200 rounded-lg">
+                        <h4 class="font-bold mb-4">Detroit Skyline</h4>
+                        <img src="https://www.michigan.photography/wp-content/uploads/2018/05/Downtown-Detroit-Skyline-at-Night-Aglow-scaled.jpg" alt="Detroit Skyline" class="w-full h-40 object-cover rounded-lg mb-4">
+                        <p>The Detroit skyline is integrated with flowing, organic elements to represent the union of urban landscape with natural consciousness.</p>
+                    </div>
+                    
+                    <div class="card p-6 border border-gray-200 rounded-lg">
+                        <h4 class="font-bold mb-4">Neural Pathways</h4>
+                        <div class="canvas-container" id="neuralCanvas"></div>
+                        <p class="mt-4">Neural pathway animations symbolize the connections between different states of consciousness, community members, and ideas.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Brand Voice Section -->
+    <section class="section sacred-bg text-white">
+        <div class="content-container">
+            <h2 class="text-4xl font-bold mb-12 text-center"><span class="psychedelic-text">Brand Voice</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div class="card bg-deep-blue bg-opacity-80 p-8">
+                    <h3 class="text-2xl font-bold mb-6">Tone & Messaging</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Grounded yet Visionary</h4>
+                            <p>Our communication balances scientific approach with spiritual exploration, making complex concepts accessible while honoring their profound nature.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Inclusive & Welcoming</h4>
+                            <p>We use language that welcomes all backgrounds and experience levels, avoiding jargon that might alienate newcomers while still respecting experienced explorers.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Safety-First Messaging</h4>
+                            <p>All communication emphasizes responsible exploration, with clear harm reduction information integrated throughout our materials.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Community-Centered</h4>
+                            <p>Our voice highlights Detroit's unique psychedelic culture and community connections, emphasizing collective growth and support.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <div class="card bg-cosmic-purple bg-opacity-80 p-8 mb-8">
+                        <h3 class="text-2xl font-bold mb-6">Communication Examples</h3>
+                        
+                        <div class="mb-6 pb-6 border-b border-gray-500">
+                            <h4 class="font-bold mb-2">For Educational Content</h4>
+                            <p class="italic">"Exploring altered states of consciousness requires both preparation and integration. In tonight's workshop, we'll examine evidence-based approaches to creating optimal conditions for meaningful experiences."</p>
+                        </div>
+                        
+                        <div class="mb-6 pb-6 border-b border-gray-500">
+                            <h4 class="font-bold mb-2">For Community Events</h4>
+                            <p class="italic">"Join our diverse community of seekers, healers, and curious minds as we gather to share stories of transformation. All journeys and perspectives are welcomed in this sacred space of connection."</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold mb-2">For Safety Information</h4>
+                            <p class="italic">"Responsible exploration begins with knowledge. Before working with any plant medicine, understand its effects, appropriate dosage, and integration practices. Remember: set, setting, and community support are your foundations for healing."</p>
+                        </div>
+                    </div>
+                    
+                    <div class="card bg-earthy-green bg-opacity-80 p-8">
+                        <h3 class="text-2xl font-bold mb-4">Key Phrases</h3>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-warm-gold mr-3"></i>
+                                <span>"Expanding consciousness with community support"</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-warm-gold mr-3"></i>
+                                <span>"Honoring ancient wisdom with modern understanding"</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-warm-gold mr-3"></i>
+                                <span>"Where Detroit meets the cosmos"</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-warm-gold mr-3"></i>
+                                <span>"Education first, exploration second"</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-circle text-xs text-warm-gold mr-3"></i>
+                                <span>"Transforming from within, together"</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Target Audience Section -->
+    <section class="section bg-white">
+        <div class="content-container">
+            <h2 class="text-4xl font-bold mb-12 text-center"><span class="psychedelic-text">Target Audience</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="card p-8 shadow-lg">
+                    <div class="text-4xl text-cosmic-purple mb-6">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">The Curious Seeker</h3>
+                    <p class="mb-4">Individuals interested in learning about psychedelics from an educational standpoint, often new to the subject and seeking reliable information.</p>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Age: 25-45</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Values education and evidence-based approaches</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Often has interest in wellness, mindfulness, or personal growth</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card p-8 shadow-lg">
+                    <div class="text-4xl text-cosmic-purple mb-6">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">The Healing Journeyer</h3>
+                    <p class="mb-4">People seeking alternative approaches to mental health, trauma healing, or personal transformation through psychedelic experiences.</p>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Age: 30-55</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>May have tried conventional therapies with limited success</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Values community support and integration practices</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card p-8 shadow-lg">
+                    <div class="text-4xl text-cosmic-purple mb-6">
+                        <i class="fas fa-seedling"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">The Experienced Explorer</h3>
+                    <p class="mb-4">Those with existing psychedelic experience seeking community, integration support, or deeper understanding of their practices.</p>
+                    <ul class="text-sm space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Age: 25-65</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Has multiple psychedelic experiences</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-earthy-green mt-1 mr-2"></i>
+                            <span>Seeking deeper knowledge and community connections</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Detroit-Specific Demographics</h3>
+                    
+                    <div class="canvas-container" id="demographicsCanvas"></div>
+                    
+                    <p class="mt-6">Our target audience reflects Detroit's diverse communities across races, socioeconomic backgrounds, and neighborhoods. We aim to be accessible to the entire Detroit metropolitan area, with special focus on communities historically excluded from psychedelic discourse.</p>
+                </div>
+                
+                <div class="card p-8 bg-gray-100 rounded-lg">
+                    <h3 class="text-2xl font-bold mb-6">Community Needs Assessment</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Education</h4>
+                            <p>78% of our community members express strong interest in science-based psychedelic education that bridges traditional and modern approaches.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Safe Gathering Spaces</h4>
+                            <p>65% seek physical locations for community connection and in-person events, emphasizing the importance of set and setting.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Integration Support</h4>
+                            <p>92% identify integration practices as critical for long-term beneficial outcomes from psychedelic experiences.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Legal Awareness</h4>
+                            <p>83% want clear information on the current legal status of psychedelics in Detroit and Michigan, with updates on decriminalization efforts.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Section -->
+    <section class="section detroit-bg text-white">
+        <div class="content-container">
+            <h2 class="text-4xl font-bold mb-12 text-center"><span class="psychedelic-text">Brand Applications</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16">
+                <div class="card bg-deep-blue bg-opacity-80 p-8">
+                    <h3 class="text-2xl font-bold mb-6">Digital Applications</h3>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Website</h4>
+                            <p class="mb-4">Our website serves as an immersive digital gateway featuring:</p>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Interactive sacred geometry animations that respond to user interaction</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Animated Detroit skyline integrated with cosmic elements</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Neural pathway connections between content sections</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Ambient sound design that can be toggled by users</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Social Media</h4>
+                            <p class="mb-4">Our social presence maintains brand consistency through:</p>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Animated sacred geometry post backgrounds</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Detroit-specific imagery with psychedelic elements</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Educational content with consistent voice and visual style</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card bg-cosmic-purple bg-opacity-80 p-8">
+                    <h3 class="text-2xl font-bold mb-6">Physical Applications</h3>
+                    
+                    <div class="space-y-8">
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Event Materials</h4>
+                            <p class="mb-4">All event materials should incorporate:</p>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Brand color palette with deep blues and cosmic purples</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Sacred geometry patterns as background elements</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Consistent typography with Montserrat for headings</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Educational Materials</h4>
+                            <p class="mb-4">Publications and handouts should feature:</p>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Clear information hierarchy with consistent headings</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Visual diagrams using brand colors and elements</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Mushroom motifs and neural pathway graphics as visual aids</span>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-light-blue mb-2">Merchandise</h4>
+                            <p class="mb-4">Community merchandise should incorporate:</p>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Subtle sacred geometry patterns that reveal complexity upon closer inspection</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Detroit-specific imagery merged with psychedelic elements</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-check-circle text-warm-gold mt-1 mr-2"></i>
+                                    <span>Materials and production methods aligned with sustainability values</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="canvas-container full-canvas" id="applicationCanvas"></div>
+        </div>
+    </section>
+
+    <!-- Michigan-Specific Section -->
+    <section class="section bg-white">
+        <div class="content-container">
+            <h2 class="text-4xl font-bold mb-12 text-center"><span class="psychedelic-text">Detroit & Michigan Context</span></h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Local Significance</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Detroit's Psychedelic Renaissance</h4>
+                            <p>Detroit has emerged as a leader in the modern psychedelic movement, with community organizers working to create accessible education and healing spaces.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Urban Renewal & Personal Transformation</h4>
+                            <p>Our brand draws parallels between Detroit's revitalization and the personal transformation possible through psychedelic experiences, highlighting themes of renewal and rebirth.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Multicultural Heritage</h4>
+                            <p>Our visual identity honors Detroit's diverse cultural heritage, drawing inspiration from the city's rich history of music, art, and community organizing.</p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="font-bold text-cosmic-purple mb-2">Legal Context</h4>
+                            <p>Detroit has decriminalized entheogenic plants (2021), alongside Ann Arbor, Hazel Park, Ferndale, and Ypsilanti. Our communications always include current, accurate information on legal status and responsible approaches.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="canvas-container full-canvas" id="michiganCanvas"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion Section -->
+    <section class="sacred-bg text-white py-24">
+        <div class="content-container text-center">
+            <h2 class="text-4xl font-bold mb-8"><span class="psychedelic-text">Elevating Consciousness Together</span></h2>
+            
+            <p class="text-xl mb-12 max-w-3xl mx-auto">This brand identity guide serves as the foundation for all Detroit Psychedelic Society communications and experiences. By maintaining consistency while embracing creative evolution, we create a recognizable presence that builds trust and fosters community connection.</p>
+            
+            <div class="mushroom float mb-8" style="transform: scale(1.5);">
+                <div class="cap"></div>
+                <div class="stem"></div>
+            </div>
+            
+            <p class="text-2xl italic">"Transforming consciousness, one mind at a time."</p>
+        </div>
+        
+        <div class="wave"></div>
+    </section>
+
+    <script>
+        // ThreeJS Animations and WebGL Effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hero Animation
+            const heroCanvas = document.getElementById('heroCanvas');
+            const heroScene = new THREE.Scene();
+            const heroCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const heroRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            heroRenderer.setSize(window.innerWidth, window.innerHeight);
+            heroCanvas.appendChild(heroRenderer.domElement);
+            
+            // Create sacred geometry (flower of life)
+            const createFlowerOfLife = () => {
+                const group = new THREE.Group();
+                const radius = 2;
+                const segments = 32;
+                
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0x9b4dca,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                // Center circle
+                const centerGeometry = new THREE.CircleGeometry(radius, segments);
+                const centerMesh = new THREE.Mesh(centerGeometry, material);
+                group.add(centerMesh);
+                
+                // Outer circles
+                for (let i = 0; i < 6; i++) {
+                    const angle = (i / 6) * Math.PI * 2;
+                    const x = radius * Math.cos(angle);
+                    const y = radius * Math.sin(angle);
+                    
+                    const circleGeometry = new THREE.CircleGeometry(radius, segments);
+                    const circleMesh = new THREE.Mesh(circleGeometry, material);
+                    circleMesh.position.set(x, y, 0);
+                    group.add(circleMesh);
+                }
+                
+                return group;
+            };
+            
+            const flower = createFlowerOfLife();
+            heroScene.add(flower);
+            
+            // Add particles
+            const particlesCount = 1000;
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particlesMaterial = new THREE.PointsMaterial({
+                color: 0xa0c4ff,
+                size: 0.05,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particlesPositions = new Float32Array(particlesCount * 3);
+            for (let i = 0; i < particlesCount * 3; i += 3) {
+                particlesPositions[i] = (Math.random() - 0.5) * 20;
+                particlesPositions[i + 1] = (Math.random() - 0.5) * 20;
+                particlesPositions[i + 2] = (Math.random() - 0.5) * 20;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(particlesPositions, 3));
+            const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+            heroScene.add(particles);
+            
+            heroCamera.position.z = 10;
+            
+            // Logo Canvas Animation
+            const logoCanvas = document.getElementById('logoCanvas');
+            if (logoCanvas) {
+                const logoScene = new THREE.Scene();
+                const logoCamera = new THREE.PerspectiveCamera(75, logoCanvas.clientWidth / logoCanvas.clientHeight, 0.1, 1000);
+                const logoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                logoRenderer.setSize(logoCanvas.clientWidth, logoCanvas.clientHeight);
+                logoCanvas.appendChild(logoRenderer.domElement);
+                
+                // Create a simplified 3D logo
+                const logoGroup = new THREE.Group();
+                
+                // Michigan shape (simplified)
+                const michiganShape = new THREE.Shape();
+                michiganShape.moveTo(0, 0);
+                michiganShape.lineTo(1, 0.5);
+                michiganShape.lineTo(0.8, 1.5);
+                michiganShape.lineTo(0, 1);
+                michiganShape.lineTo(0, 0);
+                
+                const michiganGeometry = new THREE.ExtrudeGeometry(michiganShape, {
+                    depth: 0.2,
+                    bevelEnabled: true,
+                    bevelThickness: 0.05,
+                    bevelSize: 0.05,
+                    bevelSegments: 3
+                });
+                
+                const michiganMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x080033,
+                    specular: 0x9b4dca,
+                    shininess: 30
+                });
+                
+                const michiganMesh = new THREE.Mesh(michiganGeometry, michiganMaterial);
+                michiganMesh.scale.set(2, 2, 2);
+                michiganMesh.position.set(-1, -1, 0);
+                logoGroup.add(michiganMesh);
+                
+                // Circle around Michigan
+                const circleGeometry = new THREE.RingGeometry(2.2, 2.4, 32);
+                const circleMaterial = new THREE.MeshBasicMaterial({
+                    color: 0x9b4dca,
+                    side: THREE.DoubleSide
+                });
+                const circleMesh = new THREE.Mesh(circleGeometry, circleMaterial);
+                logoGroup.add(circleMesh);
+                
+                // Emanating lines
+                for (let i = 0; i < 12; i++) {
+                    const angle = (i / 12) * Math.PI * 2;
+                    const lineGeometry = new THREE.BoxGeometry(0.05, 1, 0.05);
+                    const lineMaterial = new THREE.MeshBasicMaterial({ color: 0x9b4dca });
+                    const lineMesh = new THREE.Mesh(lineGeometry, lineMaterial);
+                    
+                    lineMesh.position.x = 3 * Math.cos(angle);
+                    lineMesh.position.y = 3 * Math.sin(angle);
+                    lineMesh.rotation.z = angle;
+                    
+                    logoGroup.add(lineMesh);
+                }
+                
+                logoScene.add(logoGroup);
+                
+                // Add light
+                const logoLight = new THREE.DirectionalLight(0xffffff, 1);
+                logoLight.position.set(5, 5, 5);
+                logoScene.add(logoLight);
+                
+                const logoAmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                logoScene.add(logoAmbientLight);
+                
+                logoCamera.position.z = 5;
+                
+                // Add controls
+                const logoControls = new THREE.OrbitControls(logoCamera, logoRenderer.domElement);
+                logoControls.enableZoom = false;
+                logoControls.enablePan = false;
+                logoControls.autoRotate = true;
+                logoControls.autoRotateSpeed = 3;
+                
+                function animateLogo() {
+                    requestAnimationFrame(animateLogo);
+                    logoControls.update();
+                    logoRenderer.render(logoScene, logoCamera);
+                }
+                
+                animateLogo();
+            }
+            
+            // Sacred Geometry Animation
+            const geometryCanvas = document.getElementById('geometryCanvas');
+            if (geometryCanvas) {
+                const geometryScene = new THREE.Scene();
+                const geometryCamera = new THREE.PerspectiveCamera(75, geometryCanvas.clientWidth / geometryCanvas.clientHeight, 0.1, 1000);
+                const geometryRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                geometryRenderer.setSize(geometryCanvas.clientWidth, geometryCanvas.clientHeight);
+                geometryCanvas.appendChild(geometryRenderer.domElement);
+                
+                // Create sacred geometry
+                const geometryGroup = new THREE.Group();
+                
+                // Flower of life
+                const flowerOfLife = createFlowerOfLife();
+                geometryGroup.add(flowerOfLife);
+                
+                // Metatron's cube
+                const metatronCube = new THREE.Group();
+                
+                // Vertices
+                const vertices = [
+                    [0, 0, 0],
+                    [1, 0, 0],
+                    [0.5, Math.sqrt(3)/2, 0],
+                    [-0.5, Math.sqrt(3)/2, 0],
+                    [-1, 0, 0],
+                    [-0.5, -Math.sqrt(3)/2, 0],
+                    [0.5, -Math.sqrt(3)/2, 0],
+                    [0, 0, 1],
+                    [0, 0, -1]
+                ];
+                
+                // Create vertices
+                vertices.forEach(vertex => {
+                    const sphereGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+                    const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0xe9c46a });
+                    const sphereMesh = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                    sphereMesh.position.set(vertex[0], vertex[1], vertex[2]);
+                    metatronCube.add(sphereMesh);
+                });
+                
+                // Create lines
+                for (let i = 0; i < vertices.length; i++) {
+                    for (let j = i + 1; j < vertices.length; j++) {
+                        const lineGeometry = new THREE.BufferGeometry();
+                        const lineMaterial = new THREE.LineBasicMaterial({ color: 0xe9c46a, transparent: true, opacity: 0.6 });
+                        
+                        const points = [
+                            new THREE.Vector3(vertices[i][0], vertices[i][1], vertices[i][2]),
+                            new THREE.Vector3(vertices[j][0], vertices[j][1], vertices[j][2])
+                        ];
+                        
+                        lineGeometry.setFromPoints(points);
+                        const line = new THREE.Line(lineGeometry, lineMaterial);
+                        metatronCube.add(line);
+                    }
+                }
+                
+                metatronCube.scale.set(0.8, 0.8, 0.8);
+                metatronCube.position.set(0, 0, 1);
+                geometryGroup.add(metatronCube);
+                
+                geometryScene.add(geometryGroup);
+                
+                geometryCamera.position.z = 3;
+                
+                // Add controls
+                const geometryControls = new THREE.OrbitControls(geometryCamera, geometryRenderer.domElement);
+                geometryControls.enableZoom = false;
+                geometryControls.enablePan = false;
+                geometryControls.autoRotate = true;
+                geometryControls.autoRotateSpeed = 2;
+                
+                function animateGeometry() {
+                    requestAnimationFrame(animateGeometry);
+                    geometryGroup.rotation.y += 0.005;
+                    geometryControls.update();
+                    geometryRenderer.render(geometryScene, geometryCamera);
+                }
+                
+                animateGeometry();
+            }
+            
+            // Neural Pathways Animation
+            const neuralCanvas = document.getElementById('neuralCanvas');
+            if (neuralCanvas) {
+                const neuralScene = new THREE.Scene();
+                const neuralCamera = new THREE.PerspectiveCamera(75, neuralCanvas.clientWidth / neuralCanvas.clientHeight, 0.1, 1000);
+                const neuralRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                neuralRenderer.setSize(neuralCanvas.clientWidth, neuralCanvas.clientHeight);
+                neuralCanvas.appendChild(neuralRenderer.domElement);
+                
+                // Create neural network
+                const neuralGroup = new THREE.Group();
+                
+                // Create nodes
+                const nodeCount = 20;
+                const nodes = [];
+                const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x9b4dca });
+                
+                for (let i = 0; i < nodeCount; i++) {
+                    const nodeGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+                    const nodeMesh = new THREE.Mesh(nodeGeometry, nodeMaterial);
+                    
+                    nodeMesh.position.x = (Math.random() - 0.5) * 5;
+                    nodeMesh.position.y = (Math.random() - 0.5) * 5;
+                    nodeMesh.position.z = (Math.random() - 0.5) * 5;
+                    
+                    nodes.push(nodeMesh);
+                    neuralGroup.add(nodeMesh);
+                }
+                
+                // Create connections
+                const lineMaterial = new THREE.LineBasicMaterial({ color: 0x2a9d8f, transparent: true, opacity: 0.6 });
+                const connections = [];
+                
+                for (let i = 0; i < nodeCount; i++) {
+                    // Connect to 2-3 nearest nodes
+                    const nearestCount = Math.floor(Math.random() * 2) + 2;
+                    
+                    for (let j = 0; j < nearestCount; j++) {
+                        const lineGeometry = new THREE.BufferGeometry();
+                        
+                        const targetIndex = (i + j + 1) % nodeCount;
+                        
+                        const points = [
+                            nodes[i].position,
+                            nodes[targetIndex].position
+                        ];
+                        
+                        lineGeometry.setFromPoints(points);
+                        const line = new THREE.Line(lineGeometry, lineMaterial);
+                        connections.push({ line, startIndex: i, endIndex: targetIndex });
+                        neuralGroup.add(line);
+                    }
+                }
+                
+                neuralScene.add(neuralGroup);
+                
+                neuralCamera.position.z = 5;
+                
+                // Add controls
+                const neuralControls = new THREE.OrbitControls(neuralCamera, neuralRenderer.domElement);
+                neuralControls.enableZoom = false;
+                neuralControls.enablePan = false;
+                neuralControls.autoRotate = true;
+                neuralControls.autoRotateSpeed = 1;
+                
+                // Animation
+                const animateNeural = function() {
+                    requestAnimationFrame(animateNeural);
+                    
+                    // Pulse nodes
+                    nodes.forEach((node, index) => {
+                        node.scale.x = 0.8 + 0.4 * Math.sin(Date.now() * 0.001 + index * 0.5);
+                        node.scale.y = 0.8 + 0.4 * Math.sin(Date.now() * 0.001 + index * 0.5);
+                        node.scale.z = 0.8 + 0.4 * Math.sin(Date.now() * 0.001 + index * 0.5);
+                    });
+                    
+                    // Update connections
+                    connections.forEach(conn => {
+                        const points = [
+                            nodes[conn.startIndex].position,
+                            nodes[conn.endIndex].position
+                        ];
+                        
+                        conn.line.geometry.setFromPoints(points);
+                        conn.line.geometry.verticesNeedUpdate = true;
+                    });
+                    
+                    neuralControls.update();
+                    neuralRenderer.render(neuralScene, neuralCamera);
+                };
+                
+                animateNeural();
+            }
+            
+            // Color Animation
+            const colorCanvas = document.getElementById('colorCanvas');
+            if (colorCanvas) {
+                const colorScene = new THREE.Scene();
+                const colorCamera = new THREE.PerspectiveCamera(75, colorCanvas.clientWidth / colorCanvas.clientHeight, 0.1, 1000);
+                const colorRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                colorRenderer.setSize(colorCanvas.clientWidth, colorCanvas.clientHeight);
+                colorCanvas.appendChild(colorRenderer.domElement);
+                
+                // Create color swatches in 3D
+                const colorGroup = new THREE.Group();
+                
+                const colors = [
+                    0x080033, // Deep Blue
+                    0x5626c4, // Cosmic Purple
+                    0x9b4dca, // Vibrant Purple
+                    0x2a9d8f, // Earthy Green
+                    0xa0c4ff, // Light Blue
+                    0xe9c46a, // Warm Gold
+                    0xd62828  // Detroit Red
+                ];
+                
+                for (let i = 0; i < colors.length; i++) {
+                    const angle = (i / colors.length) * Math.PI * 2;
+                    const radius = 3;
+                    
+                    const x = radius * Math.cos(angle);
+                    const y = radius * Math.sin(angle);
+                    
+                    const boxGeometry = new THREE.BoxGeometry(1, 1, 1);
+                    const boxMaterial = new THREE.MeshPhongMaterial({
+                        color: colors[i],
+                        specular: 0xffffff,
+                        shininess: 100
+                    });
+                    
+                    const boxMesh = new THREE.Mesh(boxGeometry, boxMaterial);
+                    boxMesh.position.set(x, y, 0);
+                    
+                    // Animation properties
+                    boxMesh.userData = {
+                        startPosition: { x, y, z: 0 },
+                        floatOffset: i * Math.PI / 4,
+                        rotateSpeed: 0.01 * (i % 2 === 0 ? 1 : -1)
+                    };
+                    
+                    colorGroup.add(boxMesh);
+                }
+                
+                // Add connecting lines
+                const lineMaterial = new THREE.LineBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.3 });
+                
+                for (let i = 0; i < colors.length; i++) {
+                    const startBox = colorGroup.children[i];
+                    const endBox = colorGroup.children[(i + 1) % colors.length];
+                    
+                    const lineGeometry = new THREE.BufferGeometry();
+                    const points = [
+                        startBox.position,
+                        endBox.position
+                    ];
+                    
+                    lineGeometry.setFromPoints(points);
+                    const line = new THREE.Line(lineGeometry, lineMaterial);
+                    colorGroup.add(line);
+                }
+                
+                colorScene.add(colorGroup);
+                
+                // Add light
+                const colorLight = new THREE.DirectionalLight(0xffffff, 1);
+                colorLight.position.set(5, 5, 5);
+                colorScene.add(colorLight);
+                
+                const colorAmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                colorScene.add(colorAmbientLight);
+                
+                colorCamera.position.z = 6;
+                
+                // Animation
+                function animateColors() {
+                    requestAnimationFrame(animateColors);
+                    
+                    // Animate color boxes
+                    for (let i = 0; i < colors.length; i++) {
+                        const box = colorGroup.children[i];
+                        
+                        // Float up and down
+                        box.position.y = box.userData.startPosition.y + 
+                                          0.3 * Math.sin(Date.now() * 0.001 + box.userData.floatOffset);
+                        
+                        // Rotate
+                        box.rotation.x += 0.01;
+                        box.rotation.y += box.userData.rotateSpeed;
+                    }
+                    
+                    // Update connecting lines
+                    for (let i = 0; i < colors.length; i++) {
+                        const lineIndex = colors.length + i;
+                        if (colorGroup.children[lineIndex]) {
+                            const line = colorGroup.children[lineIndex];
+                            const startBox = colorGroup.children[i];
+                            const endBox = colorGroup.children[(i + 1) % colors.length];
+                            
+                            const points = [
+                                startBox.position,
+                                endBox.position
+                            ];
+                            
+                            line.geometry.setFromPoints(points);
+                        }
+                    }
+                    
+                    colorGroup.rotation.y += 0.003;
+                    
+                    colorRenderer.render(colorScene, colorCamera);
+                }
+                
+                animateColors();
+            }
+            
+            // Michigan Canvas
+            const michiganCanvas = document.getElementById('michiganCanvas');
+            if (michiganCanvas) {
+                const michiganScene = new THREE.Scene();
+                const michiganCamera = new THREE.PerspectiveCamera(75, michiganCanvas.clientWidth / michiganCanvas.clientHeight, 0.1, 1000);
+                const michiganRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                michiganRenderer.setSize(michiganCanvas.clientWidth, michiganCanvas.clientHeight);
+                michiganCanvas.appendChild(michiganRenderer.domElement);
+                
+                // Create Michigan map with psychedelic elements
+                const michiganGroup = new THREE.Group();
+                
+                // Simplified Michigan shape (Lower Peninsula)
+                const lowerPeninsula = new THREE.Shape();
+                lowerPeninsula.moveTo(0, 0);
+                lowerPeninsula.lineTo(2, 0);
+                lowerPeninsula.lineTo(2.5, 1);
+                lowerPeninsula.lineTo(2, 2);
+                lowerPeninsula.lineTo(0.5, 3);
+                lowerPeninsula.lineTo(-1, 2.5);
+                lowerPeninsula.lineTo(-0.5, 1);
+                lowerPeninsula.lineTo(0, 0);
+                
+                // Upper Peninsula
+                const upperPeninsula = new THREE.Shape();
+                upperPeninsula.moveTo(0, 3.5);
+                upperPeninsula.lineTo(2, 3.2);
+                upperPeninsula.lineTo(3, 3.5);
+                upperPeninsula.lineTo(3.5, 4);
+                upperPeninsula.lineTo(2, 4.5);
+                upperPeninsula.lineTo(0.5, 4.3);
+                upperPeninsula.lineTo(0, 3.5);
+                
+                // Create extruded geometries
+                const extrudeSettings = {
+                    depth: 0.2,
+                    bevelEnabled: true,
+                    bevelThickness: 0.05,
+                    bevelSize: 0.05,
+                    bevelSegments: 3
+                };
+                
+                const lowerGeometry = new THREE.ExtrudeGeometry(lowerPeninsula, extrudeSettings);
+                const upperGeometry = new THREE.ExtrudeGeometry(upperPeninsula, extrudeSettings);
+                
+                const michiganMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x9b4dca,
+                    specular: 0xffffff,
+                    shininess: 30
+                });
+                
+                const lowerMesh = new THREE.Mesh(lowerGeometry, michiganMaterial);
+                const upperMesh = new THREE.Mesh(upperGeometry, michiganMaterial);
+                
+                michiganGroup.add(lowerMesh);
+                michiganGroup.add(upperMesh);
+                
+                // Mark Detroit with a special marker
+                const detroitSphere = new THREE.Mesh(
+                    new THREE.SphereGeometry(0.2, 32, 32),
+                    new THREE.MeshPhongMaterial({ color: 0xe9c46a })
+                );
+                detroitSphere.position.set(0.2, 1, 0.3);
+                michiganGroup.add(detroitSphere);
+                
+                // Mark other cities with decriminalization
+                const cities = [
+                    { name: "Ann Arbor", x: 0.5, y: 0.8 },
+                    { name: "Hazel Park", x: 0.3, y: 1.1 },
+                    { name: "Ferndale", x: 0.1, y: 0.9 },
+                    { name: "Ypsilanti", x: 0.7, y: 0.7 }
+                ];
+                
+                cities.forEach(city => {
+                    const citySphere = new THREE.Mesh(
+                        new THREE.SphereGeometry(0.1, 32, 32),
+                        new THREE.MeshPhongMaterial({ color: 0x2a9d8f })
+                    );
+                    citySphere.position.set(city.x, city.y, 0.3);
+                    michiganGroup.add(citySphere);
+                });
+                
+                // Add connecting neural pathways between cities
+                const neuralMaterial = new THREE.LineBasicMaterial({
+                    color: 0xe9c46a,
+                    transparent: true,
+                    opacity: 0.7
+                });
+                
+                // Connect Detroit to all other cities
+                const detroitPos = new THREE.Vector3(0.2, 1, 0.3);
+                cities.forEach(city => {
+                    const lineGeometry = new THREE.BufferGeometry();
+                    const points = [
+                        detroitPos,
+                        new THREE.Vector3(city.x, city.y, 0.3)
+                    ];
+                    lineGeometry.setFromPoints(points);
+                    const line = new THREE.Line(lineGeometry, neuralMaterial);
+                    michiganGroup.add(line);
+                });
+                
+                // Add psychedelic elements
+                for (let i = 0; i < 50; i++) {
+                    const particleGeometry = new THREE.SphereGeometry(0.03, 8, 8);
+                    const particleMaterial = new THREE.MeshBasicMaterial({
+                        color: new THREE.Color(
+                            Math.random() * 0.5 + 0.5,
+                            Math.random() * 0.5,
+                            Math.random() * 0.5 + 0.5
+                        ),
+                        transparent: true,
+                        opacity: 0.7
+                    });
+                    
+                    const particle = new THREE.Mesh(particleGeometry, particleMaterial);
+                    particle.position.set(
+                        (Math.random() - 0.5) * 5,
+                        (Math.random() - 0.5) * 5,
+                        (Math.random() - 0.5) * 5
+                    );
+                    
+                    particle.userData = {
+                        speed: Math.random() * 0.02 + 0.01,
+                        rotateSpeed: Math.random() * 0.02 + 0.01,
+                        direction: new THREE.Vector3(
+                            Math.random() - 0.5,
+                            Math.random() - 0.5,
+                            Math.random() - 0.5
+                        ).normalize()
+                    };
+                    
+                    michiganGroup.add(particle);
+                }
+                
+                // Center and scale the group
+                michiganGroup.position.set(-1, -2, 0);
+                michiganGroup.scale.set(1.5, 1.5, 1.5);
+                michiganScene.add(michiganGroup);
+                
+                // Add lights
+                const michiganLight = new THREE.DirectionalLight(0xffffff, 1);
+                michiganLight.position.set(5, 5, 5);
+                michiganScene.add(michiganLight);
+                
+                const michiganAmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                michiganScene.add(michiganAmbientLight);
+                
+                michiganCamera.position.z = 6;
+                
+                // Add controls
+                const michiganControls = new THREE.OrbitControls(michiganCamera, michiganRenderer.domElement);
+                michiganControls.enableZoom = false;
+                michiganControls.enablePan = false;
+                michiganControls.autoRotate = true;
+                michiganControls.autoRotateSpeed = 1;
+                
+                // Animation
+                function animateMichigan() {
+                    requestAnimationFrame(animateMichigan);
+                    
+                    // Pulse Detroit marker
+                    const detroitMarker = michiganGroup.children[2];
+                    detroitMarker.scale.x = 0.8 + 0.4 * Math.sin(Date.now() * 0.002);
+                    detroitMarker.scale.y = 0.8 + 0.4 * Math.sin(Date.now() * 0.002);
+                    detroitMarker.scale.z = 0.8 + 0.4 * Math.sin(Date.now() * 0.002);
+                    
+                    // Animate psychedelic particles
+                    for (let i = 7; i < michiganGroup.children.length; i++) {
+                        const particle = michiganGroup.children[i];
+                        
+                        // Move in direction
+                        particle.position.x += particle.userData.direction.x * particle.userData.speed;
+                        particle.position.y += particle.userData.direction.y * particle.userData.speed;
+                        particle.position.z += particle.userData.direction.z * particle.userData.speed;
+                        
+                        // Rotate
+                        particle.rotation.x += particle.userData.rotateSpeed;
+                        particle.rotation.y += particle.userData.rotateSpeed;
+                        
+                        // Boundary check and bounce
+                        if (Math.abs(particle.position.x) > 5 || 
+                            Math.abs(particle.position.y) > 5 || 
+                            Math.abs(particle.position.z) > 5) {
+                                
+                            particle.userData.direction.multiplyScalar(-1);
+                        }
+                    }
+                    
+                    michiganControls.update();
+                    michiganRenderer.render(michiganScene, michiganCamera);
+                }
+                
+                animateMichigan();
+            }
+            
+            // Application Canvas
+            const applicationCanvas = document.getElementById('applicationCanvas');
+            if (applicationCanvas) {
+                const appScene = new THREE.Scene();
+                const appCamera = new THREE.PerspectiveCamera(75, applicationCanvas.clientWidth / applicationCanvas.clientHeight, 0.1, 1000);
+                const appRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                appRenderer.setSize(applicationCanvas.clientWidth, applicationCanvas.clientHeight);
+                applicationCanvas.appendChild(appRenderer.domElement);
+                
+                // Create application showcase with 3D mockups
+                const appGroup = new THREE.Group();
+                
+                // Website mockup
+                const websiteGeometry = new THREE.BoxGeometry(4, 3, 0.1);
+                const websiteMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x080033,
+                    specular: 0xffffff,
+                    shininess: 100
+                });
+                
+                const websiteMesh = new THREE.Mesh(websiteGeometry, websiteMaterial);
+                websiteMesh.position.set(-3, 0, 0);
+                appGroup.add(websiteMesh);
+                
+                // Phone mockup
+                const phoneGeometry = new THREE.BoxGeometry(1, 2, 0.1);
+                const phoneMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x080033,
+                    specular: 0xffffff,
+                    shininess: 100
+                });
+                
+                const phoneMesh = new THREE.Mesh(phoneGeometry, phoneMaterial);
+                phoneMesh.position.set(0, 0, 0);
+                appGroup.add(phoneMesh);
+                
+                // Poster mockup
+                const posterGeometry = new THREE.BoxGeometry(2, 3, 0.05);
+                const posterMaterial = new THREE.MeshPhongMaterial({
+                    color: 0x9b4dca,
+                    specular: 0xffffff,
+                    shininess: 100
+                });
+                
+                const posterMesh = new THREE.Mesh(posterGeometry, posterMaterial);
+                posterMesh.position.set(3, 0, 0);
+                appGroup.add(posterMesh);
+                
+                // Add sacred geometry overlays to each mockup
+                const createGeometryOverlay = (parent, size, color) => {
+                    const geometry = new THREE.CircleGeometry(size, 32);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: color,
+                        wireframe: true,
+                        transparent: true,
+                        opacity: 0.5
+                    });
+                    
+                    const circle = new THREE.Mesh(geometry, material);
+                    circle.position.z = 0.1;
+                    parent.add(circle);
+                    
+                    return circle;
+                };
+                
+                const websiteOverlay = createGeometryOverlay(websiteMesh, 1, 0x5626c4);
+                const phoneOverlay = createGeometryOverlay(phoneMesh, 0.4, 0x2a9d8f);
+                const posterOverlay = createGeometryOverlay(posterMesh, 1, 0xe9c46a);
+                
+                appScene.add(appGroup);
+                
+                // Add lights
+                const appLight = new THREE.DirectionalLight(0xffffff, 1);
+                appLight.position.set(5, 5, 5);
+                appScene.add(appLight);
+                
+                const appAmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                appScene.add(appAmbientLight);
+                
+                appCamera.position.z = 7;
+                
+                // Animation
+                function animateApplications() {
+                    requestAnimationFrame(animateApplications);
+                    
+                    websiteOverlay.rotation.z += 0.01;
+                    phoneOverlay.rotation.z -= 0.015;
+                    posterOverlay.rotation.z += 0.008;
+                    
+                    // Breathe animation for mockups
+                    const breatheScale = 0.05 * Math.sin(Date.now() * 0.001) + 1;
+                    websiteMesh.scale.set(breatheScale, breatheScale, 1);
+                    phoneMesh.scale.set(breatheScale, breatheScale, 1);
+                    posterMesh.scale.set(breatheScale, breatheScale, 1);
+                    
+                    appGroup.rotation.y = Math.sin(Date.now() * 0.0005) * 0.3;
+                    
+                    appRenderer.render(appScene, appCamera);
+                }
+                
+                animateApplications();
+            }
+            
+            // Demographics Canvas with data visualization
+            const demographicsCanvas = document.getElementById('demographicsCanvas');
+            if (demographicsCanvas) {
+                const demoScene = new THREE.Scene();
+                const demoCamera = new THREE.PerspectiveCamera(75, demographicsCanvas.clientWidth / demographicsCanvas.clientHeight, 0.1, 1000);
+                const demoRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+                
+                demoRenderer.setSize(demographicsCanvas.clientWidth, demographicsCanvas.clientHeight);
+                demographicsCanvas.appendChild(demoRenderer.domElement);
+                
+                // Create data visualization
+                const demoGroup = new THREE.Group();
+                
+                // Create bar chart
+                const barData = [
+                    { label: "18-24", value: 0.15, color: 0x5626c4 },
+                    { label: "25-34", value: 0.35, color: 0x9b4dca },
+                    { label: "35-44", value: 0.25, color: 0x2a9d8f },
+                    { label: "45-54", value: 0.15, color: 0xa0c4ff },
+                    { label: "55+", value: 0.1, color: 0xe9c46a }
+                ];
+                
+                const barWidth = 0.6;
+                const barSpacing = 0.2;
+                const maxHeight = 3;
+                
+                barData.forEach((data, index) => {
+                    const barGeometry = new THREE.BoxGeometry(barWidth, data.value * maxHeight, barWidth);
+                    const barMaterial = new THREE.MeshPhongMaterial({
+                        color: data.color,
+                        specular: 0xffffff,
+                        shininess: 30
+                    });
+                    
+                    const barMesh = new THREE.Mesh(barGeometry, barMaterial);
+                    barMesh.position.x = index * (barWidth + barSpacing) - 2;
+                    barMesh.position.y = data.value * maxHeight / 2;
+                    
+                    barMesh.userData = {
+                        originalHeight: data.value * maxHeight,
+                        animOffset: index * 0.5
+                    };
+                    
+                    demoGroup.add(barMesh);
+                });
+                
+                // Create pie chart
+                const pieData = [
+                    { label: "Detroit City", value: 0.4, color: 0x5626c4 },
+                    { label: "Metro Detroit", value: 0.35, color: 0x2a9d8f },
+                    { label: "Other Michigan", value: 0.25, color: 0xe9c46a }
+                ];
+                
+                const pieRadius = 1.5;
+                const pieDepth = 0.3;
+                
+                let startAngle = 0;
+                pieData.forEach(data => {
+                    const angle = data.value * Math.PI * 2;
+                    
+                    const pieShape = new THREE.Shape();
+                    pieShape.moveTo(0, 0);
+                    pieShape.lineTo(
+                        pieRadius * Math.cos(startAngle),
+                        pieRadius * Math.sin(startAngle)
+                    );
+                    
+                    // Create the arc
+                    const arcPoints = 16;
+                    for (let i = 0; i <= arcPoints; i++) {
+                        const arcAngle = startAngle + (i / arcPoints) * angle;
+                        pieShape.lineTo(
+                            pieRadius * Math.cos(arcAngle),
+                            pieRadius * Math.sin(arcAngle)
+                        );
+                    }
+                    
+                    pieShape.lineTo(0, 0);
+                    
+                    const extrudeSettings = {
+                        depth: pieDepth,
+                        bevelEnabled: false
+                    };
+                    
+                    const pieGeometry = new THREE.ExtrudeGeometry(pieShape, extrudeSettings);
+                    const pieMaterial = new THREE.MeshPhongMaterial({
+                        color: data.color,
+                        specular: 0xffffff,
+                        shininess: 30
+                    });
+                    
+                    const pieMesh = new THREE.Mesh(pieGeometry, pieMaterial);
+                    pieMesh.position.set(2, 0, 0);
+                    pieMesh.rotation.z = -Math.PI / 2; // Rotate to face up
+                    
+                    demoGroup.add(pieMesh);
+                    
+                    startAngle += angle;
+                });
+                
+                demoGroup.rotation.x = -0.3;
+                demoScene.add(demoGroup);
+                
+                // Add lights
+                const demoLight = new THREE.DirectionalLight(0xffffff, 1);
+                demoLight.position.set(5, 5, 5);
+                demoScene.add(demoLight);
+                
+                const demoAmbientLight = new THREE.AmbientLight(0xffffff, 0.5);
+                demoScene.add(demoAmbientLight);
+                
+                demoCamera.position.z = 7;
+                demoCamera.position.y = 2;
+                demoCamera.lookAt(0, 0, 0);
+                
+                // Add controls
+                const demoControls = new THREE.OrbitControls(demoCamera, demoRenderer.domElement);
+                demoControls.enableZoom = false;
+                demoControls.enablePan = false;
+                demoControls.autoRotate = true;
+                demoControls.autoRotateSpeed = 0.5;
+                
+                // Animation
+                function animateDemographics() {
+                    requestAnimationFrame(animateDemographics);
+                    
+                    // Pulse bars
+                    for (let i = 0; i < barData.length; i++) {
+                        const bar = demoGroup.children[i];
+                        const pulseScale = 0.2 * Math.sin(Date.now() * 0.002 + bar.userData.animOffset) + 1;
+                        
+                        bar.scale.y = pulseScale;
+                        // Adjust y position to keep bar anchored at bottom
+                        bar.position.y = bar.userData.originalHeight * pulseScale / 2;
+                    }
+                    
+                    demoControls.update();
+                    demoRenderer.render(demoScene, demoCamera);
+                }
+                
+                animateDemographics();
+            }
+            
+            // Main animation loop for hero section
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                flower.rotation.z += 0.001;
+                
+                // Animate particles
+                particles.rotation.x += 0.0003;
+                particles.rotation.y += 0.0005;
+                
+                heroRenderer.render(heroScene, heroCamera);
+            }
+            
+            animate();
+            
+            // Resize handler
+            window.addEventListener('resize', function() {
+                // Hero section
+                heroCamera.aspect = window.innerWidth / window.innerHeight;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(window.innerWidth, window.innerHeight);
+                
+                // Other canvas resizing can be added here if needed
+            });
+        });
+        
+        // Add intersection observer for animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+            
+            document.querySelectorAll('.card, .color-box, .typeface-example').forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html

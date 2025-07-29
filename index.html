@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detroit Psychedelic Society - A Gateway to Conscious Exploration</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.9.1/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Base styles */
+        :root {
+            --cosmic-blue: #0b1354;
+            --cosmic-purple: #4f2d7f;
+            --vibrant-purple: #7b2cbf;
+            --cosmic-green: #1a472a;
+            --earthy-green: #2d6a4f;
+            --vibrant-green: #40916c;
+            --accent-gold: #d7a82b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(to bottom, var(--cosmic-blue), #000);
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Cormorant Garamond', serif;
+        }
+        
+        /* Sacred geometry background */
+        .sacred-geometry {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
+            pointer-events: none;
+            background: url(https://i.pinimg.com/originals/2e/c2/df/2ec2df78de4bf2c475adac2ce70dad60.gif);
+            background-size: cover;
+            mix-blend-mode: screen;
+        }
+        
+        /* Animated header */
+        .header-container {
+            position: relative;
+            overflow: hidden;
+            height: 100vh;
+            background: linear-gradient(180deg, rgba(11,19,84,0.9) 0%, rgba(11,19,84,0.7) 100%);
+        }
+        
+        .detroit-skyline {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 30%;
+            background-image: url('https://www.michigan.photography/wp-content/uploads/2018/05/Downtown-Detroit-Skyline-at-Night-Aglow-scaled.jpg');
+            background-size: cover;
+            background-position: center;
+            clip-path: polygon(0 50%, 5% 55%, 10% 60%, 15% 55%, 20% 70%, 25% 65%, 30% 80%, 35% 75%, 40% 65%, 45% 85%, 50% 70%, 55% 90%, 60% 80%, 65% 85%, 70% 70%, 75% 75%, 80% 65%, 85% 80%, 90% 70%, 95% 60%, 100% 65%, 100% 100%, 0 100%);
+        }
+        
+        .particles-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .logo-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            z-index: 10;
+        }
+        
+        .logo-inner {
+            position: relative;
+            width: 220px;
+            height: 220px;
+            margin: 0 auto;
+            perspective: 1000px;
+        }
+        
+        .logo-circle {
+            position: absolute;
+            border-radius: 50%;
+            border: 3px solid rgba(255,255,255,0.8);
+            animation: pulse 4s infinite alternate;
+        }
+        
+        .logo-circle-1 {
+            width: 220px;
+            height: 220px;
+            border-color: var(--vibrant-purple);
+        }
+        
+        .logo-circle-2 {
+            width: 180px;
+            height: 180px;
+            top: 20px;
+            left: 20px;
+            border-color: var(--vibrant-green);
+        }
+        
+        .logo-circle-3 {
+            width: 140px;
+            height: 140px;
+            top: 40px;
+            left: 40px;
+            border-color: var(--accent-gold);
+        }
+        
+        .logo-text {
+            position: absolute;
+            top: 60px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .logo-text h1 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(123, 44, 191, 0.8);
+        }
+        
+        .logo-text h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(123, 44, 191, 0.8);
+        }
+        
+        .logo-text h3 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(123, 44, 191, 0.8);
+        }
+        
+        /* Navigation */
+        .nav-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 100;
+            padding: 20px 0;
+            background: rgba(11, 19, 84, 0.8);
+            backdrop-filter: blur(10px);
+            transform: translateY(-100%);
+        }
+        
+        .nav-shown {
+            transform: translateY(0);
+            transition: transform 0.5s ease;
+        }
+        
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 10px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent-gold);
+        }
+        
+        .nav-link:before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent-gold);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover:before {
+            width: 100%;
+        }
+        
+        /* Dropdown styles */
+        .dropdown {
+            position: relative;
+        }
+        
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: rgba(11, 19, 84, 0.95);
+            backdrop-filter: blur(10px);
+            min-width: 250px;
+            list-style: none;
+            padding: 10px 0;
+            margin: 0;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(79, 45, 127, 0.3);
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-link {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            padding: 12px 20px;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .dropdown-link:hover {
+            color: var(--accent-gold);
+            background: rgba(79, 45, 127, 0.2);
+            border-left-color: var(--accent-gold);
+        }
+        
+        /* Hero section */
+        .hero-container {
+            min-height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 50px 20px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 0 15px rgba(123, 44, 191, 0.8);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+        
+        .hero-cta {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--vibrant-purple), var(--cosmic-purple));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(79, 45, 127, 0.5);
+        }
+        
+        .hero-cta:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 45, 127, 0.7);
+        }
+        
+        /* Section styles */
+        .section {
+            min-height: 100vh;
+            padding: 100px 0;
+            position: relative;
+        }
+        
+        .section-title-container {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+        
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-gold), transparent);
+        }
+        
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .content-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Education Hub */
+        .education-hub {
+            background: linear-gradient(to bottom, var(--cosmic-blue), var(--cosmic-purple));
+        }
+        
+        .knowledge-tree {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            position: relative;
+            margin: 60px 0;
+        }
+        
+        .knowledge-tree:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--vibrant-purple), var(--vibrant-green));
+            z-index: 0;
+        }
+        
+        .knowledge-branch {
+            width: 100%;
+            max-width: 800px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .branch-even {
+            align-self: flex-start;
+        }
+        
+        .branch-odd {
+            align-self: flex-end;
+        }
+        
+        .knowledge-node {
+            background: rgba(11, 19, 84, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(123, 44, 191, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .knowledge-node:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+        
+        .knowledge-node:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--vibrant-purple);
+            border-radius: 50%;
+            border: 3px solid var(--vibrant-green);
+        }
+        
+        .branch-even .knowledge-node:before {
+            left: -40px;
+            transform: translateY(-50%);
+        }
+        
+        .branch-odd .knowledge-node:before {
+            right: -40px;
+            transform: translateY(-50%);
+        }
+        
+        .node-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+        
+        .node-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Community Connection */
+        .community-connection {
+            background: linear-gradient(to bottom, var(--cosmic-purple), var(--cosmic-blue));
+            position: relative;
+        }
+        
+        .neural-pathways {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.1;
+            background: url('https://www.vice.com/wp-content/uploads/sites/2/2016/01/145288342061318.gif');
+            background-size: cover;
+            mix-blend-mode: screen;
+        }
+        
+        .community-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .community-card {
+            background: rgba(11, 19, 84, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(79, 45, 127, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            color: var(--accent-gold);
+            margin-bottom: 20px;
+        }
+        
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .card-content {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            flex-grow: 1;
+            margin-bottom: 20px;
+        }
+        
+        .card-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(45deg, var(--vibrant-purple), var(--cosmic-purple));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .card-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 45, 127, 0.5);
+        }
+        
+        /* Plant Medicine Resources */
+        .plant-medicine {
+            background: linear-gradient(to bottom, var(--cosmic-blue), var(--cosmic-green));
+            position: relative;
+        }
+        
+        .mushroom-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.05;
+            background-image: url('https://as1.ftcdn.net/v2/jpg/01/75/51/24/1000_F_175512443_gSffawE179i10lBBo5xjvUMo1GDFevKA.jpg');
+            background-size: cover;
+            pointer-events: none;
+        }
+        
+        .medicine-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .medicine-card {
+            background: rgba(11, 19, 84, 0.8);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 1px solid rgba(29, 106, 79, 0.3);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .medicine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+        
+        .medicine-icon {
+            position: relative;
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+        
+        .medicine-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+        
+        .medicine-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 20px;
+        }
+        
+        .medicine-effects {
+            margin-bottom: 20px;
+        }
+        
+        .effect-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+        
+        .effect-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .effect-item {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .effect-item:before {
+            content: '•';
+            position: absolute;
+            left: 5px;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+        
+        .medicine-safety {
+            font-size: 0.9rem;
+            padding: 15px;
+            background: rgba(29, 106, 79, 0.2);
+            border-radius: 10px;
+            border-left: 3px solid var(--earthy-green);
+            margin-top: 20px;
+        }
+        
+        /* Integration & Growth */
+        .integration-growth {
+            background: linear-gradient(to bottom, var(--cosmic-green), var(--cosmic-blue));
+        }
+        
+        .integration-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tab-button {
+            padding: 12px 25px;
+            background: rgba(11, 19, 84, 0.5);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-button:hover {
+            background: rgba(79, 45, 127, 0.7);
+        }
+        
+        .tab-button.active {
+            background: linear-gradient(45deg, var(--vibrant-purple), var(--cosmic-purple));
+            box-shadow: 0 5px 15px rgba(79, 45, 127, 0.5);
+        }
+        
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease forwards;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .integration-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .integration-item {
+            background: rgba(11, 19, 84, 0.8);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(29, 106, 79, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .integration-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            border-color: var(--accent-gold);
+        }
+        
+        .integration-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .integration-icon {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+            margin-right: 15px;
+        }
+        
+        .integration-name {
+            font-size: 1.2rem;
+            color: #fff;
+            font-weight: 600;
+        }
+        
+        .integration-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Michigan-specific Section */
+        .michigan-section {
+            background: linear-gradient(to bottom, var(--cosmic-blue), var(--cosmic-purple));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .michigan-map-container {
+            position: absolute;
+            top: 50%;
+            right: 0;
+            transform: translateY(-50%);
+            width: 40%;
+            height: 80%;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        .michigan-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+        
+        .michigan-title {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            color: var(--accent-gold);
+        }
+        
+        .michigan-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+        
+        .law-timeline {
+            position: relative;
+            margin: 60px 0;
+            padding-left: 50px;
+        }
+        
+        .law-timeline:before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: linear-gradient(to bottom, var(--vibrant-purple), var(--vibrant-green));
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-date {
+            position: absolute;
+            left: -50px;
+            width: 30px;
+            height: 30px;
+            background: var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: var(--cosmic-blue);
+            z-index: 1;
+        }
+        
+        .timeline-content {
+            background: rgba(11, 19, 84, 0.8);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(79, 45, 127, 0.3);
+        }
+        
+        .timeline-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .timeline-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        /* Call to Action */
+        .cta-section {
+            background: linear-gradient(to bottom, var(--cosmic-purple), var(--cosmic-blue));
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .cta-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--accent-gold);
+        }
+        
+        .cta-description {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+        
+        .cta-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .cta-button {
+            padding: 15px 30px;
+            background: linear-gradient(45deg, var(--vibrant-purple), var(--cosmic-purple));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(79, 45, 127, 0.5);
+        }
+        
+        .cta-button.secondary {
+            background: transparent;
+            border: 2px solid var(--accent-gold);
+            color: var(--accent-gold);
+            box-shadow: none;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 45, 127, 0.7);
+        }
+        
+        .cta-button.secondary:hover {
+            background: rgba(215, 168, 43, 0.1);
+            box-shadow: 0 10px 20px rgba(215, 168, 43, 0.3);
+        }
+        
+        /* Footer */
+        .footer {
+            background: var(--cosmic-blue);
+            padding: 50px 0;
+            position: relative;
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 40px;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .footer-logo {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: #fff;
+            font-weight: 700;
+        }
+        
+        .footer-description {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 20px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: #fff;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--accent-gold);
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #fff;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-link-item {
+            margin-bottom: 10px;
+        }
+        
+        .footer-link {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-link:hover {
+            color: var(--accent-gold);
+        }
+        
+        .footer-contact-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .contact-icon {
+            margin-right: 10px;
+            color: var(--accent-gold);
+        }
+        
+        .footer-newsletter {
+            position: relative;
+        }
+        
+        .newsletter-input {
+            width: 100%;
+            padding: 15px;
+            padding-right: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            border-radius: 50px;
+            color: #fff;
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-button {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 50px;
+            background: transparent;
+            border: none;
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-button:hover {
+            color: #fff;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+            50% {
+                transform: scale(1.05);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .breathe {
+            animation: breathe 6s infinite ease-in-out;
+        }
+        
+        @keyframes breathe {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.03);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Responsive styles */
+        @media (max-width: 768px) {
+            .nav-list {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .knowledge-tree:before {
+                left: 20px;
+                transform: none;
+            }
+            
+            .knowledge-branch {
+                padding-left: 60px;
+            }
+            
+            .branch-even .knowledge-node:before,
+            .branch-odd .knowledge-node:before {
+                left: -40px;
+                right: auto;
+            }
+            
+            .medicine-grid,
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .michigan-map-container {
+                display: none;
+            }
+            
+            .footer-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+        }
+        
+        /* Sound toggle button */
+        .sound-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(11, 19, 84, 0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(79, 45, 127, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .sound-toggle:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+            border-color: var(--accent-gold);
+        }
+        
+        .sound-icon {
+            color: var(--accent-gold);
+            font-size: 1.2rem;
+        }
+        
+        /* Scroll indicator */
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            z-index: 10;
+            animation: fadeInUp 2s infinite;
+        }
+        
+        .scroll-text {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+        
+        .scroll-icon {
+            font-size: 1.5rem;
+            color: var(--accent-gold);
+        }
+        
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, 20px);
+            }
+            50% {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+        }
+        
+        /* Mushroom elements */
+        .mushroom {
+            position: absolute;
+            opacity: 0.5;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 0;
+        }
+        
+        .mushroom-1 {
+            bottom: 20px;
+            left: 5%;
+            transform: rotate(10deg);
+            width: 80px;
+            height: 80px;
+            background: url('https://m.media-amazon.com/images/I/71u9G9OFs7L.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .mushroom-2 {
+            bottom: 40px;
+            right: 5%;
+            transform: rotate(-15deg);
+            width: 100px;
+            height: 100px;
+            background: url('https://m.media-amazon.com/images/I/71u9G9OFs7L.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .mushroom-container:hover .mushroom {
+            transform: translateY(-10px) scale(1.1);
+            opacity: 0.8;
+        }
+        
+        /* Scroll reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cosmic-blue);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease, visibility 1s ease;
+        }
+        
+        .loader {
+            width: 100px;
+            height: 100px;
+            position: relative;
+        }
+        
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 5px solid transparent;
+            border-top-color: var(--accent-gold);
+            border-radius: 50%;
+            animation: spin 1.5s linear infinite;
+        }
+        
+        .loader-circle:nth-child(2) {
+            width: 70%;
+            height: 70%;
+            top: 15%;
+            left: 15%;
+            border-top-color: var(--vibrant-purple);
+            animation-duration: 2s;
+            animation-direction: reverse;
+        }
+        
+        .loader-circle:nth-child(3) {
+            width: 40%;
+            height: 40%;
+            top: 30%;
+            left: 30%;
+            border-top-color: var(--vibrant-green);
+            animation-duration: 1s;
+        }
+        
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+        </div>
+    </div>
+    
+    <!-- Sacred geometry background -->
+    <div class="sacred-geometry"></div>
+    
+    <!-- Sound toggle -->
+    <div class="sound-toggle" id="soundToggle">
+        <i class="sound-icon fas fa-volume-mute" id="soundIcon"></i>
+    </div>
+    
+    <!-- Header with animated skyline -->
+    <header class="header-container" id="home">
+        <div class="particles-container" id="particles"></div>
+        <div class="detroit-skyline"></div>
+        
+        <div class="logo-container">
+            <div class="logo-inner">
+                <div class="logo-circle logo-circle-1"></div>
+                <div class="logo-circle logo-circle-2"></div>
+                <div class="logo-circle logo-circle-3"></div>
+                <div class="logo-text">
+                    <h1>DETROIT</h1>
+                    <h2>PSYCHEDELIC</h2>
+                    <h3>SOCIETY</h3>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator" id="scrollIndicator">
+            <span class="scroll-text">Scroll to explore</span>
+            <i class="scroll-icon fas fa-chevron-down"></i>
+        </div>
+    </header>
+    
+    <!-- Navigation -->
+    <nav class="nav-container" id="navbar">
+        <ul class="nav-list">
+            <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+            <li class="nav-item dropdown">
+                <a href="#conference" class="nav-link">Women and Entheogens Conference</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#conference-2025" class="dropdown-link">2025 Women and Entheogens Conference</a></li>
+                    <li><a href="#sponsor-2025" class="dropdown-link">Sponsor the 2025 Conference</a></li>
+                    <li><a href="#speakers-2025" class="dropdown-link">2025 Speakers and Workshops</a></li>
+                    <li><a href="#conference-2023" class="dropdown-link">2023 Women and Entheogens Conference</a></li>
+                </ul>
+            </li>
+            <li class="nav-item"><a href="#calendar" class="nav-link">Calendar</a></li>
+            <li class="nav-item"><a href="#planatair" class="nav-link">Planatair Stone</a></li>
+            <li class="nav-item dropdown">
+                <a href="#about" class="nav-link">About</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#monthly-gathering" class="dropdown-link">Monthly Gathering</a></li>
+                </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a href="#more" class="nav-link">More</a>
+                <ul class="dropdown-menu">
+                    <li><a href="#tamerrian" class="dropdown-link">Tamerrian Institute</a></li>
+                    <li><a href="#contact" class="dropdown-link">Contact</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Hero section -->
+    <section class="hero-container">
+        <div class="mushroom-container">
+            <div class="mushroom mushroom-1"></div>
+            <div class="mushroom mushroom-2"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title reveal">Transform Your Consciousness</h1>
+            <p class="hero-subtitle reveal">
+                Since being established in 2014, The Detroit Psychedelic Society has been known to push the envelope in moving forward all positive energy as it relates to Psychedelics. Join our community dedicated to education, safety, and the conscious exploration of expanded states of awareness.
+            </p>
+            <a href="#education" class="hero-cta reveal">Begin Your Journey</a>
+        </div>
+    </section>
+    
+    <!-- Education Hub -->
+    <section id="education" class="section education-hub">
+        <div class="content-container">
+            <div class="section-title-container">
+                <h2 class="section-title reveal">Education & Exploration Hub</h2>
+                <p class="section-subtitle reveal">
+                    Knowledge is power. Our educational resources provide evidence-based information about various psychedelic substances, their history, potential benefits, and approaches to safe, intentional use.
+                </p>
+            </div>
+            
+            <div class="knowledge-tree">
+                <div class="knowledge-branch branch-even reveal">
+                    <div class="knowledge-node">
+                        <h3 class="node-title">The Science of Psychedelics</h3>
+                        <p class="node-content">
+                            Modern research is revealing the neurobiological mechanisms behind psychedelic experiences. Studies from institutions like Johns Hopkins are showing promising results for treating conditions like depression, PTSD, and addiction. Learn about current scientific understanding and ongoing research initiatives.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="knowledge-branch branch-odd reveal">
+                    <div class="knowledge-node">
+                        <h3 class="node-title">Plant Medicine Traditions</h3>
+                        <p class="node-content">
+                            Indigenous cultures around the world have used plant medicines for healing and spiritual connection for thousands of years. Explore the rich history of traditional entheogenic practices and the wisdom they offer to contemporary explorers. Understand the importance of respecting these lineages.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="knowledge-branch branch-even reveal">
+                    <div class="knowledge-node">
+                        <h3 class="node-title">Safety Protocols & Harm Reduction</h3>
+                        <p class="node-content">
+                            Safety always comes first. Learn about proper preparation, setting, dosage, integration practices, and harm reduction techniques. Understand contraindications, potential risks, and how to create the optimal conditions for beneficial experiences. Our comprehensive guides help minimize risks.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="knowledge-branch branch-odd reveal">
+                    <div class="knowledge-node">
+                        <h3 class="node-title">Integration Practices</h3>
+                        <p class="node-content">
+                            The real work happens after the experience. Discover methods for integrating insights from psychedelic journeys into everyday life. Learn journaling techniques, meditation practices, community sharing circles, and other approaches that help transform temporary experiences into lasting positive change.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Community Connection -->
+    <section id="community" class="section community-connection">
+        <div class="neural-pathways"></div>
+        <div class="content-container">
+            <div class="section-title-container">
+                <h2 class="section-title reveal">Community Connection</h2>
+                <p class="section-subtitle reveal">
+                    We believe in the power of community to support healing and growth. Connect with like-minded individuals on the path of conscious exploration and personal development.
+                </p>
+            </div>
+            
+            <div class="community-grid">
+                <div class="community-card reveal">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="card-title">Events & Gatherings</h3>
+                    <p class="card-content">
+                        Join our regular events including educational workshops, integration circles, guest speaker presentations, and community celebrations. Our events foster connection, learning, and collective growth in a supportive environment.
+                    </p>
+                    <a href="#" class="card-link">View Calendar</a>
+                </div>
+                
+                <div class="community-card reveal">
+                    <div class="card-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="card-title">Integration Circles</h3>
+                    <p class="card-content">
+                        Our facilitated integration circles provide a safe space to process experiences, share insights, and receive community support. These gatherings help participants make meaning from their journeys and apply lessons to everyday life.
+                    </p>
+                    <a href="#" class="card-link">Join a Circle</a>
+                </div>
+                
+                <div class="community-card reveal">
+                    <div class="card-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3 class="card-title">Educational Workshops</h3>
+                    <p class="card-content">
+                        Expand your knowledge through our comprehensive workshops covering topics like harm reduction, integration practices, psychedelic history, indigenous wisdom, and the latest scientific research.
+                    </p>
+                    <a href="#" class="card-link">Upcoming Workshops</a>
+                </div>
+                
+                <div class="community-card reveal">
+                    <div class="card-icon">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <h3 class="card-title">Book Club & Discussion Groups</h3>
+                    <p class="card-content">
+                        Dive deeper into psychedelic literature, consciousness studies, and related topics with our book club and facilitated discussion groups. Expand your understanding through collective exploration and dialogue.
+                    </p>
+                    <a href="#" class="card-link">Current Readings</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Plant Medicine Resources -->
+    <section id="medicine" class="section plant-medicine">
+        <div class="mushroom-pattern"></div>
+        <div class="content-container">
+            <div class="section-title-container">
+                <h2 class="section-title reveal">Plant Medicine Resources</h2>
+                <p class="section-subtitle reveal">
+                    Learn about different entheogenic plants and fungi, their properties, historical uses, and safety considerations. Knowledge empowers responsible exploration.
+                </p>
+            </div>
+            
+            <div class="medicine-grid">
+                <div class="medicine-card reveal">
+                    <div class="medicine-icon">
+                        <img src="https://as1.ftcdn.net/v2/jpg/01/75/51/24/1000_F_175512443_gSffawE179i10lBBo5xjvUMo1GDFevKA.jpg" alt="Psilocybin Mushrooms" width="60">
+                    </div>
+                    <h3 class="medicine-title">Psilocybin Mushrooms</h3>
+                    <p class="medicine-description">
+                        Containing the compound psilocybin, these fungi have been used for centuries in spiritual and healing contexts. Modern research shows promising results for treating depression, anxiety, and addiction.
+                    </p>
+                    <div class="medicine-effects">
+                        <h4 class="effect-title">Effects may include:</h4>
+                        <ul class="effect-list">
+                            <li class="effect-item">Visual and sensory enhancement</li>
+                            <li class="effect-item">Emotional insights and release</li>
+                            <li class="effect-item">Mystical or spiritual experiences</li>
+                            <li class="effect-item">Altered perception of time</li>
+                        </ul>
+                    </div>
+                    <div class="medicine-safety">
+                        <p><strong>Safety note:</strong> Set, setting, and integration are crucial. Not recommended for those with certain psychiatric conditions or on specific medications.</p>
+                    </div>
+                </div>
+                
+                <div class="medicine-card reveal">
+                    <div class="medicine-icon">
+                        <img src="https://as1.ftcdn.net/v2/jpg/01/75/51/24/1000_F_175512443_gSffawE179i10lBBo5xjvUMo1GDFevKA.jpg" alt="DMT" width="60">
+                    </div>
+                    <h3 class="medicine-title">DMT & Ayahuasca</h3>
+                    <p class="medicine-description">
+                        DMT (Dimethyltryptamine) is found in many plants and is the active compound in Ayahuasca, a traditional brew used in Amazonian shamanic practices for healing and spiritual connection.
+                    </p>
+                    <div class="medicine-effects">
+                        <h4 class="effect-title">Effects may include:</h4>
+                        <ul class="effect-list">
+                            <li class="effect-item">Profound visionary experiences</li>
+                            <li class="effect-item">Encounter with entities or archetypes</li>
+                            <li class="effect-item">Deep emotional processing</li>
+                            <li class="effect-item">Spiritual or existential insights</li>
+                        </ul>
+                    </div>
+                    <div class="medicine-safety">
+                        <p><strong>Safety note:</strong> Ayahuasca has serious drug interactions with many medications. Always consult with knowledgeable practitioners and disclose all medications.</p>
+                    </div>
+                </div>
+                
+                <div class="medicine-card reveal">
+                    <div class="medicine-icon">
+                        <img src="https://as1.ftcdn.net/v2/jpg/01/75/51/24/1000_F_175512443_gSffawE179i10lBBo5xjvUMo1GDFevKA.jpg" alt="MDMA" width="60">
+                    </div>
+                    <h3 class="medicine-title">MDMA</h3>
+                    <p class="medicine-description">
+                        Though synthetic rather than a plant medicine, MDMA is showing remarkable potential in therapy for PTSD. MAPS research has advanced MDMA-assisted therapy toward FDA approval for treatment-resistant PTSD.
+                    </p>
+                    <div class="medicine-effects">
+                        <h4 class="effect-title">Effects may include:</h4>
+                        <ul class="effect-list">
+                            <li class="effect-item">Increased empathy and openness</li>
+                            <li class="effect-item">Reduced fear response</li>
+                            <li class="effect-item">Enhanced emotional processing</li>
+                            <li class="effect-item">Feelings of connection and trust</li>
+                        </ul>
+                    </div>
+                    <div class="medicine-safety">
+                        <p><strong>Safety note:</strong> Hyperthermia and dehydration are risks. Integration support is essential for therapeutic benefit. Not recommended for those with heart conditions.</p>
+                    </div>
+                </div>
+                
+                <div class="medicine-card reveal">
+                    <div class="medicine-icon">
+                        <img src="https://as1.ftcdn.net/v2/jpg/01/75/51/24/1000_F_175512443_gSffawE179i10lBBo5xjvUMo1GDFevKA.jpg" alt="Peyote and San Pedro" width="60">
+                    </div>
+                    <h3 class="medicine-title">Peyote & San Pedro</h3>
+                    <p class="medicine-description">
+                        These mescaline-containing cacti have been used in Native American and South American healing traditions for thousands of years. They are sacred plants with deep cultural significance.
+                    </p>
+                    <div class="medicine-effects">
+                        <h4 class="effect-title">Effects may include:</h4>
+                        <ul class="effect-list">
+                            <li class="effect-item">Vivid visual experiences</li>
+                            <li class="effect-item">Deep introspective insights</li>
+                            <li class="effect-item">Connection to nature</li>
+                            <li class="effect-item">Physical purging and cleansing</li>
+                        </ul>
+                    </div>
+                    <div class="medicine-safety">
+                        <p><strong>Safety note:</strong> Peyote is endangered and sacred to Native American traditions. Cultural respect and ecological awareness are essential considerations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Integration & Growth -->
+    <section id="integration" class="section integration-growth">
+        <div class="content-container">
+            <div class="section-title-container">
+                <h2 class="section-title reveal">Integration & Growth</h2>
+                <p class="section-subtitle reveal">
+                    Integration transforms temporary experiences into lasting positive change. Discover practices and resources to help you make meaning from your journeys and apply insights to everyday life.
+                </p>
+            </div>
+            
+            <div class="integration-tabs">
+                <button class="tab-button active" data-tab="practices">Integration Practices</button>
+                <button class="tab-button" data-tab="resources">Support Resources</button>
+                <button class="tab-button" data-tab="journal">Journaling Prompts</button>
+                <button class="tab-button" data-tab="community">Community Support</button>
+            </div>
+            
+            <div class="tab-content active" id="practices">
+                <ul class="integration-list">
+                    <li class="integration-item reveal">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-pen-fancy"></i>
+                            <h4 class="integration-name">Journaling</h4>
+                        </div>
+                        <p class="integration-description">
+                            Writing about your experiences helps process insights and emotions while creating a record you can revisit. Try stream-of-consciousness writing, guided prompts, or visual journaling to capture different aspects of your experience.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item reveal">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-om"></i>
+                            <h4 class="integration-name">Meditation & Mindfulness</h4>
+                        </div>
+                        <p class="integration-description">
+                            Regular meditation helps maintain connection to the insights and states of consciousness accessed during psychedelic experiences. Practice mindful awareness of thoughts, emotions, and sensations to deepen self-understanding.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item reveal">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-paint-brush"></i>
+                            <h4 class="integration-name">Creative Expression</h4>
+                        </div>
+                        <p class="integration-description">
+                            Art, music, dance, and other creative practices can help express and process experiences that may be difficult to put into words. Allow creative flow without judgment to access deeper insights and emotional processing.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item reveal">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-tree"></i>
+                            <h4 class="integration-name">Nature Connection</h4>
+                        </div>
+                        <p class="integration-description">
+                            Spending time in natural settings can help maintain the sense of connection and wonder often experienced during psychedelic journeys. Practice mindful walks, forest bathing, or simply sitting quietly in nature.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="resources">
+                <ul class="integration-list">
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-user-md"></i>
+                            <h4 class="integration-name">Integration Specialists</h4>
+                        </div>
+                        <p class="integration-description">
+                            Professional support from therapists and coaches familiar with psychedelic integration can be invaluable. We maintain a resource list of psychedelic-informed therapists and integration specialists in the Detroit area.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-books"></i>
+                            <h4 class="integration-name">Reading Materials</h4>
+                        </div>
+                        <p class="integration-description">
+                            Books, articles, and research papers can provide frameworks for understanding and integrating experiences. Our curated reading list covers integration practices, psychedelic science, spirituality, and consciousness.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-podcast"></i>
+                            <h4 class="integration-name">Podcasts & Videos</h4>
+                        </div>
+                        <p class="integration-description">
+                            Audio and visual resources featuring experts in the field can provide valuable insights and practices. Our media library includes interviews, lectures, guided meditations, and integration tutorials.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="journal">
+                <ul class="integration-list">
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-lightbulb"></i>
+                            <h4 class="integration-name">Insight Exploration</h4>
+                        </div>
+                        <p class="integration-description">
+                            <strong>Prompts:</strong><br>
+                            • What was the most meaningful insight from my experience?<br>
+                            • How might this insight change how I live my daily life?<br>
+                            • What patterns or behaviors did I recognize that no longer serve me?<br>
+                            • What new possibilities have opened up that I hadn't considered before?
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-heart"></i>
+                            <h4 class="integration-name">Emotional Processing</h4>
+                        </div>
+                        <p class="integration-description">
+                            <strong>Prompts:</strong><br>
+                            • What emotions came up during my experience that need further attention?<br>
+                            • Where do I feel these emotions in my body?<br>
+                            • What message might these emotions be carrying for me?<br>
+                            • How can I create space for these emotions in my everyday life?
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-forward"></i>
+                            <h4 class="integration-name">Moving Forward</h4>
+                        </div>
+                        <p class="integration-description">
+                            <strong>Prompts:</strong><br>
+                            • What small, actionable steps can I take to honor what I learned?<br>
+                            • What relationships in my life need attention or healing?<br>
+                            • What new practices or habits would support my continued growth?<br>
+                            • How can I remain connected to the perspective I gained?
+                        </p>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="tab-content" id="community">
+                <ul class="integration-list">
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-circle"></i>
+                            <h4 class="integration-name">Integration Circles</h4>
+                        </div>
+                        <p class="integration-description">
+                            Our regular integration circles provide a supportive community space to share experiences, challenges, and insights. Facilitated by experienced guides, these circles create connection and collective wisdom.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-hand-holding-heart"></i>
+                            <h4 class="integration-name">Peer Support Network</h4>
+                        </div>
+                        <p class="integration-description">
+                            Connect with others on similar paths through our peer support network. Sometimes the most valuable integration happens through authentic human connection and shared experience.
+                        </p>
+                    </li>
+                    
+                    <li class="integration-item">
+                        <div class="integration-title">
+                            <i class="integration-icon fas fa-hands-helping"></i>
+                            <h4 class="integration-name">Volunteer Opportunities</h4>
+                        </div>
+                        <p class="integration-description">
+                            Contributing to community efforts can be a powerful way to integrate and embody insights. Our volunteer program offers ways to give back, connect, and put your values into action.
+                        </p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Michigan-specific Section -->
+    <section id="michigan" class="section michigan-section">
+        <div class="michigan-map-container" id="michiganMap"></div>
+        <div class="content-container">
+            <div class="michigan-content">
+                <h2 class="section-title reveal">Detroit & Michigan Resources</h2>
+                <p class="section-subtitle reveal">
+                    Information specific to our local context, including legal status, community initiatives, and regional resources for the conscious psychedelic community.
+                </p>
+                
+                <h3 class="michigan-title reveal">Legal Landscape</h3>
+                <p class="michigan-description reveal">
+                    Understanding the legal context is essential for responsible engagement. Here's the current status of psychedelic policy in our region:
+                </p>
+                
+                <div class="law-timeline">
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2020</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Ann Arbor Decriminalization</h4>
+                            <p class="timeline-description">
+                                In September 2020, Ann Arbor City Council unanimously passed an ordinance to decriminalize entheogenic plants, including psilocybin mushrooms, ayahuasca, ibogaine, and mescaline-containing cacti.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2021</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Detroit Decriminalization</h4>
+                            <p class="timeline-description">
+                                In November 2021, Detroit voters passed Proposal E, which decriminalized entheogenic plants, making enforcement of laws against these substances the city's lowest law enforcement priority.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2022</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Hazel Park Decriminalization</h4>
+                            <p class="timeline-description">
+                                In March 2022, Hazel Park became the third Michigan city to decriminalize entheogenic plants and fungi, following the lead of Ann Arbor and Detroit.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <div class="timeline-item reveal">
+                        <div class="timeline-date">2024</div>
+                        <div class="timeline-content">
+                            <h4 class="timeline-title">Statewide Initiatives</h4>
+                            <p class="timeline-description">
+                                Ongoing efforts to decriminalize or create regulated access to certain psychedelics at the state level. Michigan lawmakers have introduced legislation related to psychedelic therapy for PTSD treatment.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="michigan-description reveal">
+                    <strong>Important Note:</strong> Decriminalization does not mean legalization. While these policies reduce prosecution priority, psychedelic substances remain federally controlled. Our society advocates for responsible engagement within the current legal framework while supporting evidence-based policy reform.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Call to Action -->
+    <section class="cta-section" id="contact">
+        <div class="content-container">
+            <h2 class="cta-title reveal">Join Our Community</h2>
+            <p class="cta-description reveal">
+                Connect with The Detroit Psychedelic Society to access events, educational resources, and a supportive community dedicated to conscious exploration, healing, and growth.
+            </p>
+            <div class="cta-buttons reveal">
+                <a href="#" class="cta-button">Become a Member</a>
+                <a href="#" class="cta-button secondary">Attend an Event</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="content-container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <div class="footer-logo">Detroit Psychedelic Society</div>
+                    <p class="footer-description">
+                        Established in 2014, promoting education, community, and responsible exploration of expanded states of consciousness.
+                    </p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-meetup"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">Quick Links</h3>
+                    <ul class="footer-links">
+                        <li class="footer-link-item"><a href="#" class="footer-link">Events Calendar</a></li>
+                        <li class="footer-link-item"><a href="#" class="footer-link">Educational Resources</a></li>
+                        <li class="footer-link-item"><a href="#" class="footer-link">Integration Support</a></li>
+                        <li class="footer-link-item"><a href="#" class="footer-link">Community Guidelines</a></li>
+                        <li class="footer-link-item"><a href="#" class="footer-link">Donate</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">Contact Information</h3>
+                    <div class="footer-contact-item">
+                        <i class="contact-icon fas fa-envelope"></i>
+                        <span>info@detroitpsychedelicsociety.com</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="contact-icon fas fa-map-marker-alt"></i>
+                        <span>Detroit, Michigan</span>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3 class="footer-title">Stay Connected</h3>
+                    <p class="footer-description">
+                        Join our newsletter to stay updated on events, resources, and community news.
+                    </p>
+                    <div class="footer-newsletter">
+                        <input type="email" class="newsletter-input" placeholder="Your email address">
+                        <button class="newsletter-button"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2025 Detroit Psychedelic Society. All rights reserved. | Information provided for educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Audio element -->
+    <audio id="ambientSound" loop>
+        <source src="" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Loader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1500);
+        });
+        
+        // Navigation scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 100) {
+                navbar.classList.add('nav-shown');
+            } else {
+                navbar.classList.remove('nav-shown');
+            }
+            
+            // Reveal elements on scroll
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(function(element) {
+                const windowHeight = window.innerHeight;
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 150;
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+        });
+        
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Tab functionality
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and content
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                document.getElementById(this.dataset.tab).classList.add('active');
+            });
+        });
+        
+        // Sound toggle
+        const soundToggle = document.getElementById('soundToggle');
+        const soundIcon = document.getElementById('soundIcon');
+        const ambientSound = document.getElementById('ambientSound');
+        let soundOn = false;
+        
+        soundToggle.addEventListener('click', function() {
+            if (soundOn) {
+                ambientSound.pause();
+                soundIcon.classList.remove('fa-volume-up');
+                soundIcon.classList.add('fa-volume-mute');
+            } else {
+                ambientSound.play();
+                soundIcon.classList.remove('fa-volume-mute');
+                soundIcon.classList.add('fa-volume-up');
+            }
+            soundOn = !soundOn;
+        });
+        
+        // Particles.js for background
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles', {
+                "particles": {
+                    "number": {
+                        "value": 100,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": true,
+                            "speed": 2,
+                            "size_min": 0.3,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 1,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+        
+        // Michigan Map with Three.js
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('michiganMap');
+            
+            if (container && window.THREE) {
+                const width = container.offsetWidth;
+                const height = container.offsetHeight;
+                
+                // Create scene
+                const scene = new THREE.Scene();
+                
+                // Create camera
+                const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+                camera.position.z = 5;
+                
+                // Create renderer
+                const renderer = new THREE.WebGLRenderer({ alpha: true });
+                renderer.setSize(width, height);
+                renderer.setClearColor(0x000000, 0);
+                container.appendChild(renderer.domElement);
+                
+                // Create Michigan outline
+                const michiganShape = new THREE.Shape();
+                
+                // Simple Michigan outline coordinates (simplified)
+                michiganShape.moveTo(0, 0);
+                michiganShape.lineTo(1, 0);
+                michiganShape.lineTo(1.2, 0.5);
+                michiganShape.lineTo(1.5, 0.7);
+                michiganShape.lineTo(1, 1);
+                michiganShape.lineTo(0.5, 1.2);
+                michiganShape.lineTo(0, 1);
+                michiganShape.lineTo(-0.5, 0.7);
+                michiganShape.lineTo(-0.2, 0.5);
+                michiganShape.lineTo(0, 0);
+                
+                const geometry = new THREE.ShapeGeometry(michiganShape);
+                
+                // Create materials with gradient
+                const material = new THREE.MeshBasicMaterial({
+                    color: 0x4f2d7f,
+                    transparent: true,
+                    opacity: 0.7,
+                    wireframe: false,
+                    side: THREE.DoubleSide
+                });
+                
+                const wireMaterial = new THREE.MeshBasicMaterial({
+                    color: 0xd7a82b,
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                
+                // Create meshes
+                const michiganMesh = new THREE.Mesh(geometry, material);
+                const wireframeMesh = new THREE.Mesh(geometry, wireMaterial);
+                
+                // Add meshes to scene
+                scene.add(michiganMesh);
+                scene.add(wireframeMesh);
+                
+                // Add connection dots for cities
+                const detroitGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+                const detroitMaterial = new THREE.MeshBasicMaterial({ color: 0xd7a82b });
+                const detroitMesh = new THREE.Mesh(detroitGeometry, detroitMaterial);
+                detroitMesh.position.set(0.8, 0.2, 0.1);
+                scene.add(detroitMesh);
+                
+                const annArborGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+                const annArborMaterial = new THREE.MeshBasicMaterial({ color: 0xd7a82b });
+                const annArborMesh = new THREE.Mesh(annArborGeometry, annArborMaterial);
+                annArborMesh.position.set(0.6, 0.15, 0.1);
+                scene.add(annArborMesh);
+                
+                const hazelParkGeometry = new THREE.SphereGeometry(0.05, 16, 16);
+                const hazelParkMaterial = new THREE.MeshBasicMaterial({ color: 0xd7a82b });
+                const hazelParkMesh = new THREE.Mesh(hazelParkGeometry, hazelParkMaterial);
+                hazelParkMesh.position.set(0.75, 0.25, 0.1);
+                scene.add(hazelParkMesh);
+                
+                // Animation function
+                function animate() {
+                    requestAnimationFrame(animate);
+                    
+                    michiganMesh.rotation.y += 0.005;
+                    wireframeMesh.rotation.y += 0.005;
+                    
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                
+                // Resize handler
+                window.addEventListener('resize', function() {
+                    const width = container.offsetWidth;
+                    const height = container.offsetHeight;
+                    
+                    camera.aspect = width / height;
+                    camera.updateProjectionMatrix();
+                    
+                    renderer.setSize(width, height);
+                });
+            }
+        });
+    </script>
+</body>
+</html>
