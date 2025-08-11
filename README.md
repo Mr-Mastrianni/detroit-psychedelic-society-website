@@ -33,7 +33,7 @@ The website navigation has been updated to match the original Detroit Psychedeli
   - 2025 Speakers and Workshops
   - 2023 Women and Entheogens Conference
 - **Calendar**
-- **Planatair Stone**
+- **Palantir Stone**
 - **About** (dropdown)
   - Monthly Gathering
 - **More** (dropdown)
