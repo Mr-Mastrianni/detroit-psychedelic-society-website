@@ -6,7 +6,7 @@
 
 First, make sure all your files are committed and pushed to your GitHub repository:
 
-```bash
+```bash 
 git add .
 git commit -m "Set up GitHub Pages deployment"
 git push origin main
@@ -18,7 +18,7 @@ git push origin main
 2. Click on the **Settings** tab
 3. Scroll down to the **Pages** section in the left sidebar
 4. Under **Source**, select **GitHub Actions**
-5. The deployment workflow will automatically trigger
+5. The deployment workflow will automatically triggers
 
 ### 3. Access Your Website
 
